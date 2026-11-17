@@ -1,19 +1,118 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>WATA Tour 2026 — Ranking &amp; Head-to-Head</title>
+
+  <!-- Apariencia App Nativa (iOS y Android) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="WATA Tour">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="WATA Tour">
+  <meta name="theme-color" content="#064e3b">
+
+  <!-- Vista previa al compartir enlace en WhatsApp / Redes -->
+  <meta property="og:title" content="WATA Tour 2026 — Ranking & Head-to-Head">
+  <meta property="og:description" content="Estadísticas oficiales en vivo desde Google Sheets, puntaje Race 2026 y cruces Cara a Cara.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon e Ícono para Pantalla de Inicio (generado automáticamente en alta resolución) -->
+  <link id="faviconLink" rel="icon" type="image/png">
+  <link id="appleTouchIconLink" rel="apple-touch-icon">
+  <link id="manifestLink" rel="manifest">
+
   <script src="https://cdn.tailwindcss.com/"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+
+  <!-- Script generador de Ícono App 512x512 y Manifest PWA sin archivos externos -->
+  <script>
+    (function setupAppIconAndManifest() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      // Fondo degradado esmeralda oscuro
+      const grad = ctx.createLinearGradient(0, 0, 512, 512);
+      grad.addColorStop(0, '#0f172a');
+      grad.addColorStop(0.5, '#064e3b');
+      grad.addColorStop(1, '#022c22');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 512, 512);
+
+      // Aro decorativo sutil
+      ctx.strokeStyle = 'rgba(52, 211, 153, 0.35)';
+      ctx.lineWidth = 14;
+      ctx.beginPath();
+      ctx.arc(256, 256, 210, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Pelota de tenis estilizada arriba
+      ctx.fillStyle = '#a3e635';
+      ctx.beginPath();
+      ctx.arc(256, 155, 52, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.arc(220, 155, 42, -0.85, 0.85);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(292, 155, 42, Math.PI - 0.85, Math.PI + 0.85);
+      ctx.stroke();
+
+      // Texto WATA
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 104px Inter, system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('WATA', 256, 290);
+
+      // Subtítulo TOUR 2026
+      ctx.fillStyle = '#34d399';
+      ctx.font = '800 36px Inter, system-ui, sans-serif';
+      ctx.fillText('TOUR 2026', 256, 368);
+
+      const iconDataUrl = canvas.toDataURL('image/png');
+
+      // Asignar ícono para pestaña e iPhone/iPad
+      document.getElementById('faviconLink').href = iconDataUrl;
+      document.getElementById('appleTouchIconLink').href = iconDataUrl;
+
+      // Generar Web App Manifest dinámico para Android
+      const manifest = {
+        name: 'WATA Tour 2026 — Ranking & H2H',
+        short_name: 'WATA Tour',
+        start_url: window.location.href,
+        display: 'standalone',
+        background_color: '#0f172a',
+        theme_color: '#064e3b',
+        icons: [
+          {
+            src: iconDataUrl,
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable'
+          }
+        ]
+      };
+      const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+      document.getElementById('manifestLink').href = URL.createObjectURL(manifestBlob);
+    })();
+  </script>
+
   <style>
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background-color: #f8fafc;
       color: #0f172a;
       -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
     }
     .no-scrollbar::-webkit-scrollbar {
       display: none;
@@ -57,6 +156,14 @@
             <span id="syncDot" class="w-2.5 h-2.5 rounded-full bg-amber-400 sync-pulse"></span>
             <span id="syncStatusText">Sincronizando Sheets...</span>
           </div>
+
+          <!-- Botón Compartir Link -->
+          <button id="shareAppBtn" type="button" title="Compartir enlace del circuito" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs sm:text-sm font-semibold transition cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+            </svg>
+            <span id="shareBtnLabel">Compartir</span>
+          </button>
 
           <!-- Botón Refrescar Directo -->
           <button id="quickRefreshBtn" type="button" title="Recargar datos desde Google Sheets" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-sm transition cursor-pointer">
@@ -446,14 +553,12 @@
       }
 
       // =========================================================================
-      // 4. TRANSFORMACIÓN HOJA 1: RACE 2026 (ESTRUCTURA EXACTA DE LA CAPTURA)
-      //    Fila 8: Col A = RANK. | Col B = JUGADOR | Col C = AMISTOSOS |
-      //            Col D..K = PTS. TORNEO | Col L = Total (sin título)
+      // 4. TRANSFORMACIÓN HOJA 1: RACE 2026
       // =========================================================================
       function parseRaceSheet(csvText) {
         const rows = parseCSV(csvText);
         let headerRowIdx = -1;
-        let playerColIdx = 1; // Columna B por defecto
+        let playerColIdx = 1;
 
         for (let i = 0; i < rows.length; i++) {
           const idx = rows[i].findIndex(c => c.toUpperCase() === 'JUGADOR');
@@ -474,7 +579,6 @@
           ? headers.findIndex(h => h.includes('AMISTOSO'))
           : playerColIdx + 1;
 
-        // Detectar índices de columnas "PTS. TORNEO" (D..K) y columna Total (L)
         const torneoColIndices = [];
         for (let c = amistososColIdx + 1; c < headers.length; c++) {
           if (headers[c].includes('TORNEO')) {
@@ -509,7 +613,6 @@
             ? parsePoints(row[totalColIdx])
             : (amistosos + torneos);
 
-          // Respaldo por si en alguna fila el total está en la última celda numérica
           if (total === 0 && (amistosos > 0 || torneos > 0)) {
             total = amistosos + torneos;
           }
@@ -1212,6 +1315,24 @@
         });
 
         document.getElementById('quickRefreshBtn').addEventListener('click', loadAllFromSheets);
+
+        document.getElementById('shareAppBtn').addEventListener('click', async () => {
+          const shareData = {
+            title: 'WATA Tour 2026 — Ranking & H2H',
+            text: 'Revisa el Ranking Race 2026 y tu historial Cara a Cara del WATA Tour:',
+            url: window.location.href
+          };
+          if (navigator.share) {
+            try {
+              await navigator.share(shareData);
+            } catch (_) {}
+          } else if (navigator.clipboard) {
+            await navigator.clipboard.writeText(window.location.href);
+            const label = document.getElementById('shareBtnLabel');
+            label.textContent = '¡Link copiado!';
+            setTimeout(() => { label.textContent = 'Compartir'; }, 2000);
+          }
+        });
       }
 
       // =========================================================================
