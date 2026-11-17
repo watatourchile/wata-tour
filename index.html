@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<!DOCTYPE html><html lang="es"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>WATA Tour 2026 — Ranking &amp; Head-to-Head</title>
+  <title>WATA Tour — Ranking &amp; Head-to-Head (2025–2026)</title>
 
   <!-- Apariencia App Nativa (iOS y Android) -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,11 +11,11 @@
   <meta name="application-name" content="WATA Tour">
   <meta name="theme-color" content="#020c1b">
 
-  <!-- Tu nuevo logo para Pantalla de Inicio, Pestaña y WhatsApp -->
+  <!-- Logo oficial para Pantalla de Inicio, Pestaña y WhatsApp -->
   <link rel="icon" type="image/jpeg" href="./logo.jpg">
   <link rel="apple-touch-icon" href="./logo.jpg">
-  <meta property="og:title" content="WATA Tour 2026 — Ranking & Head-to-Head">
-  <meta property="og:description" content="Estadísticas oficiales en vivo desde Google Sheets, puntaje Race 2026 y cruces Cara a Cara.">
+  <meta property="og:title" content="WATA Tour — Ranking &amp; Head-to-Head (2025–2026)">
+  <meta property="og:description" content="Estadísticas oficiales en vivo desde Google Sheets, puntajes Race 2025 y 2026, y cruces históricos Cara a Cara.">
   <meta property="og:image" content="https://rodrigosotomaureira.github.io/wata-tour/logo.jpg">
   <meta property="og:type" content="website">
 
@@ -49,7 +47,7 @@
       animation: pulseDot 2s infinite ease-in-out;
     }
   </style>
-</head>
+<script defer="" data-domain="wata-tour.tiiny.site" src="https://analytics.tiiny.net/js/plausible.js"></script></head>
 <body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
 
   <!-- HEADER PRINCIPAL -->
@@ -58,15 +56,15 @@
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-semibold tracking-wide uppercase mb-2">
-            <span>🎾 Circuito Oficial 2026</span>
+            <span>🎾 Circuito Oficial 2025 – 2026</span>
             <span class="text-emerald-500">•</span>
             <span id="headerMatchCountBadge">Cargando partidos...</span>
           </div>
           <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            WATA Tour 2026 <span class="text-emerald-400 font-bold">— Ranking &amp; Head-to-Head</span>
+            WATA Tour <span class="text-emerald-400 font-bold">— Ranking &amp; Head-to-Head</span>
           </h1>
           <p class="text-slate-300 text-xs sm:text-sm mt-1">
-            Estadísticas oficiales en vivo desde Google Sheets, puntaje Race 2026 y cruces Cara a Cara.
+            Estadísticas oficiales en vivo desde Google Sheets: Temporadas 2025 y 2026 + Historial Cara a Cara.
           </p>
         </div>
 
@@ -98,7 +96,7 @@
       <!-- NAVEGACIÓN POR PESTAÑAS -->
       <nav class="mt-6 flex gap-2 overflow-x-auto no-scrollbar pb-1" aria-label="Secciones principales">
         <button type="button" data-tab="ranking" class="tab-btn active-tab flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-emerald-500 text-slate-950 shadow-sm">
-          <span>🏆 Ranking Race 2026</span>
+          <span>🏆 Ranking Race</span>
         </button>
         <button type="button" data-tab="h2h" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-slate-800/75 text-slate-200 hover:bg-slate-800">
           <span>⚔️ Cara a Cara (H2H)</span>
@@ -110,14 +108,14 @@
     </div>
   </header>
 
-  <!-- BANNER DE CARGA / ERROR -->
+  <!-- BANNER DE CARGA / AVISO -->
   <div id="globalAlertBanner" class="max-w-6xl w-full mx-auto px-4 sm:px-6 pt-5">
     <div id="globalAlertContent" class="rounded-2xl p-4 bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs sm:text-sm flex items-center gap-3">
       <svg class="w-5 h-5 text-emerald-600 animate-spin shrink-0" fill="none" viewBox="0 0 24 24">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
       </svg>
-      <span>Cargando datos en vivo desde Google Sheets (<strong>Race 2026</strong> y <strong>AMISTOSOS 2026</strong>)...</span>
+      <span>Cargando temporadas <strong>2025</strong> y <strong>2026</strong> desde Google Sheets...</span>
     </div>
   </div>
 
@@ -125,14 +123,30 @@
   <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6">
 
     <!-- =========================================================
-         SECCIÓN 1: RANKING RACE 2026
+         SECCIÓN 1: RANKING RACE (SELECTOR DESPLEGABLE 2026 / 2025)
          ========================================================= -->
     <section id="section-ranking" class="space-y-6">
+      <!-- Selector Desplegable de Temporada Race -->
+      <div class="bg-white rounded-2xl p-3.5 sm:p-4 border border-slate-200/90 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <label for="raceYearSelect" class="text-xs font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">
+            Temporada Race:
+          </label>
+          <select id="raceYearSelect" class="px-3.5 py-2 rounded-xl border border-emerald-300 bg-emerald-50/70 text-sm font-extrabold text-emerald-950 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+            <option value="2026">🏆 Race 2026 (Actual)</option>
+            <option value="2025">📜 Race 2025 (Final)</option>
+          </select>
+        </div>
+        <div id="raceSeasonBadgeInfo" class="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl">
+          Mostrando clasificación oficial Race 2026 (En curso)
+        </div>
+      </div>
+
       <!-- 4 KPI Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
         <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm">
           <div class="flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider">
-            <span>Líder Race 2026</span>
+            <span id="kpiLeaderTitle">Líder Race 2026</span>
             <span class="text-base">👑</span>
           </div>
           <div id="kpiLeaderName" class="mt-2 text-lg font-extrabold text-slate-900 truncate">—</div>
@@ -141,16 +155,16 @@
 
         <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm">
           <div class="flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider">
-            <span>Partidos Amistosos</span>
+            <span id="kpiMatchesTitle">Amistosos 2026</span>
             <span class="text-base">🎾</span>
           </div>
           <div id="kpiTotalMatches" class="mt-2 text-2xl font-extrabold text-slate-900">0</div>
-          <div id="kpiMatchesBreakdown" class="mt-0.5 text-xs text-slate-500">Temporada 2026 en vivo</div>
+          <div id="kpiMatchesBreakdown" class="mt-0.5 text-xs text-slate-500">Temporada en vivo</div>
         </div>
 
         <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm">
           <div class="flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider">
-            <span>Más Activo en Cancha</span>
+            <span id="kpiActiveTitle">Más Activo 2026</span>
             <span class="text-base">🔥</span>
           </div>
           <div id="kpiMostActiveName" class="mt-2 text-lg font-extrabold text-slate-900 truncate">—</div>
@@ -219,10 +233,10 @@
     </section>
 
     <!-- =========================================================
-         SECCIÓN 2: CARA A CARA (H2H)
+         SECCIÓN 2: CARA A CARA (H2H) HISTÓRICO 2025 + 2026
          ========================================================= -->
     <section id="section-h2h" class="hidden space-y-6">
-      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm space-y-4">
         <div class="flex flex-col md:flex-row items-stretch md:items-end gap-3">
           <div class="flex-1">
             <label for="h2hPlayer1" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">
@@ -247,6 +261,18 @@
             <select id="h2hPlayer2" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 text-sm font-semibold text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"></select>
           </div>
         </div>
+
+        <!-- Selector Desplegable de Período H2H -->
+        <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+          <label for="h2hPeriodSelect" class="text-xs font-bold uppercase tracking-wider text-slate-500">
+            Período de comparación:
+          </label>
+          <select id="h2hPeriodSelect" class="px-3.5 py-1.5 rounded-xl border border-slate-300 bg-slate-50 text-xs sm:text-sm font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+            <option value="ALL">Histórico Completo (2025 + 2026)</option>
+            <option value="2026">Solo Temporada 2026</option>
+            <option value="2025">Solo Temporada 2025</option>
+          </select>
+        </div>
       </div>
 
       <div id="h2hScoreboard" class="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 text-white rounded-2xl p-5 sm:p-6 shadow-md border border-slate-700/80"></div>
@@ -265,15 +291,23 @@
     </section>
 
     <!-- =========================================================
-         SECCIÓN 3: HISTORIAL DE PARTIDOS
+         SECCIÓN 3: HISTORIAL COMPLETO DE PARTIDOS (2025 + 2026)
          ========================================================= -->
     <section id="section-matches" class="hidden space-y-5">
-      <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
         <div class="sm:col-span-2 relative">
           <input id="matchesSearch" type="text" placeholder="Buscar por jugador o N° de partido (ej: 102, Barredo)..." class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
           <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z"></path>
           </svg>
+        </div>
+
+        <div>
+          <select id="matchesYearFilter" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 text-sm font-semibold text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="ALL">Todas las temporadas (2025–2026)</option>
+            <option value="2026">Temporada 2026</option>
+            <option value="2025">Temporada 2025</option>
+          </select>
         </div>
 
         <div>
@@ -305,32 +339,35 @@
 
   <!-- FOOTER -->
   <footer class="border-t border-slate-200 bg-white mt-10 py-5 px-4 text-center text-xs text-slate-500">
-    WATA Tour 2026 • Conectado en vivo a Google Sheets (Hojas: Race 2026 &amp; AMISTOSOS 2026).
+    WATA Tour • Conectado en vivo a Google Sheets (Race 2025, Amistosos 2025, Race 2026 &amp; Amistosos 2026).
   </footer>
 
   <!-- =========================================================
-       SCRIPT PRINCIPAL 100% DINÁMICO DESDE GOOGLE SHEETS
+       SCRIPT PRINCIPAL MULTI-TEMPORADA CON AUTO-FALLBACK DE RED
        ========================================================= -->
   <script>
     (function () {
       'use strict';
 
-      // =========================================================================
-      // 1. ENLACES FIJOS DEFINITIVOS DE GOOGLE SHEETS
-      // =========================================================================
-      const RACE_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZ3r7pG_LCx26Frlcu39Wy32QVep--XZgklehHPOC_tzqBa5PXIqILMssatwd9IJTxS_s9Hn5dXx2P/pub?gid=1816711531&single=true&output=csv';
-      const MATCHES_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZ3r7pG_LCx26Frlcu39Wy32QVep--XZgklehHPOC_tzqBa5PXIqILMssatwd9IJTxS_s9Hn5dXx2P/pub?gid=769656278&single=true&output=csv';
-
-      let state = {
-        raceRows: [],
-        matches: [],
-        players: [],
-        activeTab: 'ranking'
+      const SHEETS_URLS = {
+        race2026: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZ3r7pG_LCx26Frlcu39Wy32QVep--XZgklehHPOC_tzqBa5PXIqILMssatwd9IJTxS_s9Hn5dXx2P/pub?gid=1816711531&single=true&output=csv',
+        matches2026: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZ3r7pG_LCx26Frlcu39Wy32QVep--XZgklehHPOC_tzqBa5PXIqILMssatwd9IJTxS_s9Hn5dXx2P/pub?gid=769656278&single=true&output=csv',
+        race2025: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZ3r7pG_LCx26Frlcu39Wy32QVep--XZgklehHPOC_tzqBa5PXIqILMssatwd9IJTxS_s9Hn5dXx2P/pub?gid=1939277898&single=true&output=csv',
+        matches2025: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZ3r7pG_LCx26Frlcu39Wy32QVep--XZgklehHPOC_tzqBa5PXIqILMssatwd9IJTxS_s9Hn5dXx2P/pub?gid=999589335&single=true&output=csv'
       };
 
-      // =========================================================================
-      // 2. LIMPIEZA DE TEXTO Y NORMALIZACIÓN DE JUGADORES
-      // =========================================================================
+      let state = {
+        seasons: {
+          '2026': { raceRows: [], matches: [], players: [] },
+          '2025': { raceRows: [], matches: [], players: [] }
+        },
+        allMatches: [],
+        allPlayerNames: [],
+        activeTab: 'ranking',
+        selectedRaceYear: '2026',
+        selectedH2HPeriod: 'ALL'
+      };
+
       function cleanText(str) {
         if (str === null || str === undefined) return '';
         let s = String(str);
@@ -389,7 +426,8 @@
         'benjamin hernandez': 'Benjamín Hernández',
         'alvaro calas': 'Álvaro Calas',
         'kurt moore': 'Kurt Moore',
-        'jeremias mandujano': 'Jeremías Mandujano'
+        'jeremias mandujano': 'Jeremías Mandujano',
+        'jaime sepulveda': 'Jaime Sepúlveda'
       };
 
       function normKey(name) {
@@ -417,9 +455,6 @@
         return Number.isFinite(num) ? Math.round(num) : 0;
       }
 
-      // =========================================================================
-      // 3. PARSER RFC-4180 PARA CSV DE GOOGLE SHEETS
-      // =========================================================================
       function parseCSV(text) {
         const rows = [];
         let currentRow = [];
@@ -472,10 +507,7 @@
         return rows;
       }
 
-      // =========================================================================
-      // 4. TRANSFORMACIÓN HOJA 1: RACE 2026
-      // =========================================================================
-      function parseRaceSheet(csvText) {
+      function parseRaceSheet(csvText, seasonYear) {
         const rows = parseCSV(csvText);
         let headerRowIdx = -1;
         let playerColIdx = 1;
@@ -490,7 +522,7 @@
         }
 
         if (headerRowIdx === -1) {
-          throw new Error('No se encontró la columna JUGADOR en la hoja Race 2026.');
+          throw new Error(`No se encontró la columna JUGADOR en Race ${seasonYear}.`);
         }
 
         const headers = rows[headerRowIdx].map(h => h.toUpperCase());
@@ -548,7 +580,7 @@
         }
 
         if (parsedPlayers.length === 0) {
-          throw new Error('No se encontraron registros de jugadores debajo de la fila JUGADOR en Race 2026.');
+          throw new Error(`No se encontraron jugadores en Race ${seasonYear}.`);
         }
 
         parsedPlayers.sort((a, b) => b.total - a.total || b.amistosos - a.amistosos);
@@ -563,24 +595,21 @@
         return parsedPlayers;
       }
 
-      // =========================================================================
-      // 5. TRANSFORMACIÓN HOJA 2: AMISTOSOS 2026
-      // =========================================================================
-      function normalizeDateStr(rawDate) {
+      function normalizeDateStr(rawDate, fallbackYear) {
         const s = cleanText(rawDate);
         const dmy = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
         if (dmy) {
           const dd = dmy[1].padStart(2, '0');
           const mm = dmy[2].padStart(2, '0');
           let yyyy = dmy[3];
-          if (yyyy === '0202') yyyy = '2026';
+          if (yyyy === '0202') yyyy = fallbackYear;
           if (yyyy.length === 2) yyyy = '20' + yyyy;
           return `${yyyy}-${mm}-${dd}`;
         }
         return s;
       }
 
-      function parseMatchesSheet(csvText) {
+      function parseMatchesSheet(csvText, seasonYear) {
         const rows = parseCSV(csvText);
         const groupedById = new Map();
         const orphanRows = [];
@@ -588,6 +617,10 @@
         for (let i = 0; i < rows.length; i++) {
           const row = rows[i];
           if (!row || row.length < 4) continue;
+
+          const rawPlayerCell = cleanText(row[2] || '');
+          // Ignorar partidos de dobles con "/" (ej. "Macpherson / Oyarzun")
+          if (!rawPlayerCell || rawPlayerCell.includes('/')) continue;
 
           const outcomeIdx = row.findIndex(cell => {
             const u = cell.toUpperCase();
@@ -597,8 +630,8 @@
           if (outcomeIdx === -1) continue;
 
           const matchId = parseInt(row[0], 10);
-          const fecha = normalizeDateStr(row[1] || '');
-          const playerName = getDisplayName(row[2] || '');
+          const fecha = normalizeDateStr(row[1] || '', seasonYear);
+          const playerName = getDisplayName(rawPlayerCell);
           if (!playerName) continue;
 
           const middleCols = row.slice(3, outcomeIdx);
@@ -634,6 +667,7 @@
 
           const entry = {
             id: Number.isFinite(matchId) ? matchId : null,
+            season: seasonYear,
             fecha,
             player: playerName,
             sets,
@@ -673,7 +707,9 @@
           const superficie = r1.superficie || r2.superficie || 'Clay';
 
           return {
+            uid: `${seasonYear}-${id}`,
             id,
+            season: seasonYear,
             fecha: r1.fecha || r2.fecha,
             p1: r1.player,
             p2: r2.player,
@@ -702,10 +738,7 @@
         return matches;
       }
 
-      // =========================================================================
-      // 6. COMBINAR RANKING + ESTADÍSTICAS REALES DESDE PARTIDOS
-      // =========================================================================
-      function buildCombinedModel(raceRows, matches) {
+      function buildSeasonModel(raceRows, matches) {
         const statsMap = new Map();
 
         function ensurePlayerStat(displayName) {
@@ -772,9 +805,6 @@
         return players;
       }
 
-      // =========================================================================
-      // 7. SINCRONIZACIÓN EN VIVO CON GOOGLE SHEETS
-      // =========================================================================
       function setSyncStatus(status, message) {
         const dot = document.getElementById('syncDot');
         const text = document.getElementById('syncStatusText');
@@ -793,7 +823,9 @@
 
         if (type === 'loading') {
           content.className = 'rounded-2xl p-4 bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs sm:text-sm flex items-center gap-3';
-        } else if (type === 'error') {
+        } else if (type === 'warning') {
+          content.className = 'rounded-2xl p-4 bg-amber-50 border border-amber-300 text-amber-950 text-xs sm:text-sm flex items-center justify-between gap-3';
+        } else {
           content.className = 'rounded-2xl p-4 bg-rose-50 border border-rose-200 text-rose-900 text-xs sm:text-sm flex items-center justify-between gap-3';
         }
         content.innerHTML = htmlMessage;
@@ -803,81 +835,168 @@
         document.getElementById('globalAlertBanner').classList.add('hidden');
       }
 
-      async function fetchCsvNoCache(url) {
-        const sep = url.includes('?') ? '&' : '?';
-        const bustUrl = `${url}${sep}_ts=${Date.now()}`;
-        const res = await fetch(bustUrl, { cache: 'no-store' });
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status} al leer Google Sheets`);
+      // Fetch directo + respaldo automático con proxy CORS si se abre localmente o hay bloqueo
+      async function fetchCsvResilient(url, sheetLabel) {
+        const attempts = [
+          url,
+          `https://corsproxy.io/?${encodeURIComponent(url)}`,
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
+        ];
+
+        let lastError = 'Sin respuesta';
+
+        for (const candidateUrl of attempts) {
+          try {
+            const res = await fetch(candidateUrl);
+            if (!res.ok) {
+              lastError = `HTTP ${res.status}`;
+              continue;
+            }
+            const text = await res.text();
+            const trimmed = text.trim();
+            if (!trimmed || trimmed.startsWith('<!DOCTYPE html') || trimmed.startsWith('<html')) {
+              lastError = 'No publicada como CSV';
+              continue;
+            }
+            return text;
+          } catch (err) {
+            lastError = err && err.message ? err.message : 'Error de red';
+          }
         }
-        const text = await res.text();
-        if (text.trim().startsWith('<!DOCTYPE html') || text.trim().startsWith('<html')) {
-          throw new Error('Google Sheets devolvió HTML en lugar de CSV. Verifica que ambas pestañas estén publicadas en la web como CSV.');
-        }
-        return text;
+
+        throw new Error(`${sheetLabel} (${lastError})`);
       }
 
       async function loadAllFromSheets() {
-        setSyncStatus('loading', 'Actualizando desde Sheets...');
+        setSyncStatus('loading', 'Actualizando 2025 y 2026...');
         showGlobalAlert('loading', `
           <svg class="w-5 h-5 text-emerald-600 animate-spin shrink-0" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
           </svg>
-          <span>Descargando datos actualizados de <strong>Race 2026</strong> y <strong>AMISTOSOS 2026</strong>...</span>
+          <span>Descargando datos en vivo desde Google Sheets...</span>
         `);
 
-        try {
-          const [raceCsv, matchesCsv] = await Promise.all([
-            fetchCsvNoCache(RACE_CSV_URL),
-            fetchCsvNoCache(MATCHES_CSV_URL)
-          ]);
+        const results = await Promise.allSettled([
+          fetchCsvResilient(SHEETS_URLS.race2026, 'Race 2026'),
+          fetchCsvResilient(SHEETS_URLS.matches2026, 'Amistosos 2026'),
+          fetchCsvResilient(SHEETS_URLS.race2025, 'Race 2025'),
+          fetchCsvResilient(SHEETS_URLS.matches2025, 'Amistosos 2025')
+        ]);
 
-          const raceRows = parseRaceSheet(raceCsv);
-          const matches = parseMatchesSheet(matchesCsv);
-          const players = buildCombinedModel(raceRows, matches);
+        const warnings = [];
 
-          state.raceRows = raceRows;
-          state.matches = matches;
-          state.players = players;
+        let raceRows26 = [], matches26 = [];
+        if (results[0].status === 'fulfilled') {
+          try { raceRows26 = parseRaceSheet(results[0].value, '2026'); }
+          catch (e) { warnings.push(e.message); }
+        } else {
+          warnings.push(results[0].reason.message);
+        }
 
-          hideGlobalAlert();
-          setSyncStatus('ok', `En vivo (${matches.length} PJ • ${players.length} jug.)`);
+        if (results[1].status === 'fulfilled') {
+          try { matches26 = parseMatchesSheet(results[1].value, '2026'); }
+          catch (e) { warnings.push(e.message); }
+        } else {
+          warnings.push(results[1].reason.message);
+        }
 
-          updateHeaderAndKPIs();
-          renderRankingTable();
-          populateH2HSelectors();
-          renderH2H();
-          populateVenueFilter();
-          renderAllMatches();
-        } catch (err) {
-          console.error(err);
-          setSyncStatus('error', 'Error de conexión Sheets');
+        let raceRows25 = [], matches25 = [];
+        if (results[2].status === 'fulfilled') {
+          try { raceRows25 = parseRaceSheet(results[2].value, '2025'); }
+          catch (e) { warnings.push(e.message); }
+        } else {
+          warnings.push(results[2].reason.message);
+        }
+
+        if (results[3].status === 'fulfilled') {
+          try { matches25 = parseMatchesSheet(results[3].value, '2025'); }
+          catch (e) { warnings.push(e.message); }
+        } else {
+          warnings.push(results[3].reason.message);
+        }
+
+        const players26 = buildSeasonModel(raceRows26, matches26);
+        const players25 = buildSeasonModel(raceRows25, matches25);
+
+        state.seasons['2026'] = { raceRows: raceRows26, matches: matches26, players: players26 };
+        state.seasons['2025'] = { raceRows: raceRows25, matches: matches25, players: players25 };
+        state.allMatches = [...matches25, ...matches26];
+
+        const uniquePlayersMap = new Map();
+        [...players26, ...players25].forEach(p => {
+          if (!uniquePlayersMap.has(p.key)) {
+            uniquePlayersMap.set(p.key, p.jugador);
+          }
+        });
+        state.allPlayerNames = Array.from(uniquePlayersMap.values()).sort((a, b) => a.localeCompare(b, 'es'));
+
+        if (state.allPlayerNames.length === 0) {
+          setSyncStatus('error', 'Sin conexión a Sheets');
           showGlobalAlert('error', `
             <div>
-              <strong>Error al cargar datos:</strong> ${err.message}
+              <strong>No se pudieron leer las hojas:</strong> ${warnings.join(' | ')}.
             </div>
             <button onclick="document.getElementById('quickRefreshBtn').click()" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white text-xs font-bold shrink-0 cursor-pointer">
               Reintentar
             </button>
           `);
+          return;
         }
+
+        if (warnings.length > 0) {
+          setSyncStatus('ok', `Parcial (${state.allMatches.length} PJ)`);
+          showGlobalAlert('warning', `
+            <div>
+              <strong>Aviso:</strong> No cargó ${warnings.join(' • ')}. Verifica que esté publicada como CSV en Google Sheets.
+            </div>
+            <button onclick="document.getElementById('globalAlertBanner').classList.add('hidden')" class="px-2.5 py-1 rounded-lg bg-amber-200 text-amber-950 text-xs font-bold shrink-0 cursor-pointer">
+              Cerrar
+            </button>
+          `);
+        } else {
+          hideGlobalAlert();
+          setSyncStatus('ok', `En vivo (${state.allMatches.length} PJ totales)`);
+        }
+
+        updateGlobalCounters();
+        renderRankingSection();
+        populateH2HSelectors();
+        renderH2H();
+        populateVenueFilter();
+        renderAllMatches();
       }
 
-      // =========================================================================
-      // 8. RENDERIZADO: HEADER, KPIS Y TABLA RANKING
-      // =========================================================================
       function formatPoints(n) {
         return Number(n || 0).toLocaleString('es-CL');
       }
 
-      function updateHeaderAndKPIs() {
-        const totalMatches = state.matches.length;
-        const players = state.players;
+      function updateGlobalCounters() {
+        const totalHistorical = state.allMatches.length;
+        const m25 = state.seasons['2025'].matches.length;
+        const m26 = state.seasons['2026'].matches.length;
 
-        document.getElementById('headerMatchCountBadge').textContent = `${totalMatches} Partidos Registrados`;
-        document.getElementById('tabMatchCount').textContent = totalMatches;
-        document.getElementById('kpiTotalMatches').textContent = totalMatches;
+        document.getElementById('headerMatchCountBadge').textContent = `${totalHistorical} Partidos (${m25} en '25 • ${m26} en '26)`;
+        document.getElementById('tabMatchCount').textContent = totalHistorical;
+      }
+
+      function renderRankingSection() {
+        const year = state.selectedRaceYear;
+        const seasonData = state.seasons[year];
+        const players = seasonData.players;
+        const matchesCount = seasonData.matches.length;
+
+        document.getElementById('raceYearSelect').value = year;
+
+        document.getElementById('raceSeasonBadgeInfo').textContent = year === '2026'
+          ? 'Mostrando clasificación oficial Race 2026 (En curso)'
+          : 'Mostrando clasificación final Race 2025 (Cerrada)';
+
+        document.getElementById('kpiLeaderTitle').textContent = year === '2026' ? 'Líder Race 2026' : 'Campeón Race 2025';
+        document.getElementById('kpiMatchesTitle').textContent = `Amistosos ${year}`;
+        document.getElementById('kpiActiveTitle').textContent = `Más Activo ${year}`;
+        document.getElementById('kpiTotalMatches').textContent = matchesCount;
+        document.getElementById('kpiMatchesBreakdown').textContent = `Temporada ${year} registrada`;
         document.getElementById('kpiPlayersCount').textContent = players.length;
 
         if (players.length > 0) {
@@ -888,15 +1007,18 @@
           const mostActive = [...players].sort((a, b) => b.pj - a.pj || b.g - a.g)[0];
           document.getElementById('kpiMostActiveName').textContent = mostActive.jugador;
           document.getElementById('kpiMostActivePj').textContent = `${mostActive.pj} partidos jugados`;
+        } else {
+          document.getElementById('kpiLeaderName').textContent = '—';
+          document.getElementById('kpiLeaderPts').textContent = 'Sin datos';
+          document.getElementById('kpiMostActiveName').textContent = '—';
+          document.getElementById('kpiMostActivePj').textContent = '0 partidos jugados';
         }
-      }
 
-      function renderRankingTable() {
         const tbody = document.getElementById('rankingTableBody');
         const query = normKey(document.getElementById('rankingSearch').value);
         const sortBy = document.getElementById('rankingSort').value;
 
-        let list = [...state.players];
+        let list = [...players];
 
         if (query) {
           list = list.filter(p => normKey(p.jugador).includes(query));
@@ -914,7 +1036,7 @@
           tbody.innerHTML = `
             <tr>
               <td colspan="10" class="py-8 text-center text-slate-400 text-sm">
-                No se encontraron jugadores con ese criterio.
+                No se encontraron jugadores en ${year}.
               </td>
             </tr>
           `;
@@ -972,9 +1094,9 @@
             const p1Select = document.getElementById('h2hPlayer1');
             const p2Select = document.getElementById('h2hPlayer2');
             p1Select.value = selectedName;
-            if (p2Select.value === selectedName && state.players.length > 1) {
-              const alt = state.players.find(pl => pl.jugador !== selectedName);
-              if (alt) p2Select.value = alt.jugador;
+            if (p2Select.value === selectedName && state.allPlayerNames.length > 1) {
+              const alt = state.allPlayerNames.find(name => name !== selectedName);
+              if (alt) p2Select.value = alt;
             }
             switchTab('h2h');
             renderH2H();
@@ -982,33 +1104,29 @@
         });
       }
 
-      // =========================================================================
-      // 9. RENDERIZADO: CARA A CARA (H2H)
-      // =========================================================================
       function populateH2HSelectors() {
         const p1Select = document.getElementById('h2hPlayer1');
         const p2Select = document.getElementById('h2hPlayer2');
         const prev1 = p1Select.value;
         const prev2 = p2Select.value;
 
-        const sortedNames = [...state.players]
-          .map(p => p.jugador)
-          .sort((a, b) => a.localeCompare(b, 'es'));
-
+        const sortedNames = state.allPlayerNames;
         const optionsHtml = sortedNames.map(name => `<option value="${name}">${name}</option>`).join('');
         p1Select.innerHTML = optionsHtml;
         p2Select.innerHTML = optionsHtml;
 
+        const top2026 = state.seasons['2026'].players;
+
         if (prev1 && sortedNames.includes(prev1)) {
           p1Select.value = prev1;
-        } else if (state.players[0]) {
-          p1Select.value = state.players[0].jugador;
+        } else if (top2026[0] && sortedNames.includes(top2026[0].jugador)) {
+          p1Select.value = top2026[0].jugador;
         }
 
         if (prev2 && sortedNames.includes(prev2) && prev2 !== p1Select.value) {
           p2Select.value = prev2;
-        } else if (state.players[1]) {
-          p2Select.value = state.players[1].jugador;
+        } else if (top2026[1] && sortedNames.includes(top2026[1].jugador)) {
+          p2Select.value = top2026[1].jugador;
         }
       }
 
@@ -1016,12 +1134,18 @@
         const isDraw = normKey(m.winner) === 'empate';
         const p1Won = !isDraw && normKey(m.winner) === normKey(m.p1);
         const p2Won = !isDraw && normKey(m.winner) === normKey(m.p2);
+        const seasonBadgeStyle = m.season === '2026'
+          ? 'bg-emerald-600 text-white'
+          : 'bg-slate-700 text-slate-100';
 
         return `
           <article class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-xs hover:border-emerald-300 transition flex flex-col justify-between gap-3">
-            <div class="flex items-center justify-between text-[11px] text-slate-500 font-semibold">
-              <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-bold">#${m.id} • ${m.fecha}</span>
-              <span>📍 ${m.recinto} (${m.superficie})</span>
+            <div class="flex items-center justify-between text-[11px] text-slate-500 font-semibold gap-2">
+              <div class="flex items-center gap-1.5">
+                <span class="px-2 py-0.5 rounded-md font-extrabold ${seasonBadgeStyle}">${m.season}</span>
+                <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-bold">#${m.id} • ${m.fecha}</span>
+              </div>
+              <span class="truncate">📍 ${m.recinto} (${m.superficie})</span>
             </div>
 
             <div class="space-y-1.5">
@@ -1059,8 +1183,11 @@
       function renderH2H() {
         const p1 = document.getElementById('h2hPlayer1').value;
         const p2 = document.getElementById('h2hPlayer2').value;
+        const period = state.selectedH2HPeriod;
         const k1 = normKey(p1);
         const k2 = normKey(p2);
+
+        document.getElementById('h2hPeriodSelect').value = period;
 
         const scoreboard = document.getElementById('h2hScoreboard');
         const listEl = document.getElementById('h2hMatchesList');
@@ -1074,29 +1201,51 @@
           return;
         }
 
-        const directMatches = state.matches
+        const sourceMatches = period === 'ALL'
+          ? state.allMatches
+          : state.seasons[period].matches;
+
+        const directMatches = sourceMatches
           .filter(m => {
             const mk1 = normKey(m.p1);
             const mk2 = normKey(m.p2);
             return (mk1 === k1 && mk2 === k2) || (mk1 === k2 && mk2 === k1);
           })
-          .sort((a, b) => b.id - a.id);
+          .sort((a, b) => Number(b.season) - Number(a.season) || b.id - a.id);
 
         let w1 = 0, w2 = 0, draws = 0;
+        let w1_25 = 0, w2_25 = 0, w1_26 = 0, w2_26 = 0;
+
         directMatches.forEach(m => {
           const wk = normKey(m.winner);
-          if (wk === 'empate') draws++;
-          else if (wk === k1) w1++;
-          else if (wk === k2) w2++;
+          if (wk === 'empate') {
+            draws++;
+          } else if (wk === k1) {
+            w1++;
+            if (m.season === '2025') w1_25++;
+            if (m.season === '2026') w1_26++;
+          } else if (wk === k2) {
+            w2++;
+            if (m.season === '2025') w2_25++;
+            if (m.season === '2026') w2_26++;
+          }
         });
 
+        const periodLabel = period === 'ALL' ? 'Histórico Total (2025–2026)' : `Temporada ${period}`;
+
         scoreboard.innerHTML = `
+          <div class="text-center mb-3">
+            <span class="px-3 py-1 rounded-full bg-white/10 text-emerald-300 text-[11px] font-bold uppercase tracking-wider">
+              ${periodLabel}
+            </span>
+          </div>
           <div class="grid grid-cols-3 items-center text-center gap-2">
             <div>
               <div class="text-xs uppercase tracking-wider text-emerald-300 font-bold mb-1">Jugador 1</div>
               <div class="text-base sm:text-xl font-extrabold truncate">${p1}</div>
               <div class="mt-2 text-3xl sm:text-4xl font-black text-emerald-400">${w1}</div>
               <div class="text-[11px] text-slate-300">Victorias</div>
+              ${period === 'ALL' ? `<div class="mt-1 text-[10px] text-slate-400">2025: ${w1_25} • 2026: ${w1_26}</div>` : ''}
             </div>
 
             <div class="border-x border-slate-700/80 px-2">
@@ -1112,6 +1261,7 @@
               <div class="text-base sm:text-xl font-extrabold truncate">${p2}</div>
               <div class="mt-2 text-3xl sm:text-4xl font-black text-emerald-400">${w2}</div>
               <div class="text-[11px] text-slate-300">Victorias</div>
+              ${period === 'ALL' ? `<div class="mt-1 text-[10px] text-slate-400">2025: ${w2_25} • 2026: ${w2_26}</div>` : ''}
             </div>
           </div>
         `;
@@ -1122,7 +1272,7 @@
         if (directMatches.length === 0) {
           listEl.innerHTML = `
             <div class="md:col-span-2 bg-white rounded-2xl p-8 text-center border border-slate-200 text-slate-500 text-sm">
-              Aún no registran enfrentamientos directos en la temporada 2026.
+              No registran enfrentamientos directos en el período seleccionado.
             </div>
           `;
         } else {
@@ -1130,13 +1280,10 @@
         }
       }
 
-      // =========================================================================
-      // 10. RENDERIZADO: HISTORIAL COMPLETO DE PARTIDOS
-      // =========================================================================
       function populateVenueFilter() {
         const select = document.getElementById('matchesVenueFilter');
         const currentVal = select.value;
-        const venues = [...new Set(state.matches.map(m => m.recinto).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
+        const venues = [...new Set(state.allMatches.map(m => m.recinto).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
 
         select.innerHTML = `<option value="ALL">Todos los recintos (${venues.length})</option>` +
           venues.map(v => `<option value="${v}">${v}</option>`).join('');
@@ -1151,15 +1298,17 @@
 
         const searchRaw = document.getElementById('matchesSearch').value.trim();
         const searchNorm = normKey(searchRaw);
+        const yearFilter = document.getElementById('matchesYearFilter').value;
         const venue = document.getElementById('matchesVenueFilter').value;
         const outcome = document.getElementById('matchesOutcomeFilter').value;
 
-        const hasFilters = Boolean(searchRaw) || venue !== 'ALL' || outcome !== 'ALL';
+        const hasFilters = Boolean(searchRaw) || yearFilter !== 'ALL' || venue !== 'ALL' || outcome !== 'ALL';
         resetBtn.classList.toggle('hidden', !hasFilters);
 
-        const filtered = [...state.matches]
-          .sort((a, b) => b.id - a.id)
+        const filtered = [...state.allMatches]
+          .sort((a, b) => Number(b.season) - Number(a.season) || b.id - a.id)
           .filter(m => {
+            if (yearFilter !== 'ALL' && m.season !== yearFilter) return false;
             if (venue !== 'ALL' && m.recinto !== venue) return false;
             const isDraw = normKey(m.winner) === 'empate';
             if (outcome === 'WIN' && isDraw) return false;
@@ -1174,7 +1323,7 @@
             return true;
           });
 
-        label.textContent = `Mostrando ${filtered.length} de ${state.matches.length} partidos (del más reciente al más antiguo)`;
+        label.textContent = `Mostrando ${filtered.length} de ${state.allMatches.length} partidos (2026 y 2025)`;
 
         if (filtered.length === 0) {
           grid.innerHTML = `
@@ -1188,9 +1337,6 @@
         grid.innerHTML = filtered.map(m => renderMatchCard(m)).join('');
       }
 
-      // =========================================================================
-      // 11. NAVEGACIÓN POR PESTAÑAS Y EVENTOS UI
-      // =========================================================================
       function switchTab(tabName) {
         state.activeTab = tabName;
         document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1210,8 +1356,13 @@
           btn.addEventListener('click', () => switchTab(btn.getAttribute('data-tab')));
         });
 
-        document.getElementById('rankingSearch').addEventListener('input', renderRankingTable);
-        document.getElementById('rankingSort').addEventListener('change', renderRankingTable);
+        document.getElementById('raceYearSelect').addEventListener('change', (e) => {
+          state.selectedRaceYear = e.target.value;
+          renderRankingSection();
+        });
+
+        document.getElementById('rankingSearch').addEventListener('input', renderRankingSection);
+        document.getElementById('rankingSort').addEventListener('change', renderRankingSection);
 
         document.getElementById('h2hPlayer1').addEventListener('change', renderH2H);
         document.getElementById('h2hPlayer2').addEventListener('change', renderH2H);
@@ -1224,11 +1375,18 @@
           renderH2H();
         });
 
+        document.getElementById('h2hPeriodSelect').addEventListener('change', (e) => {
+          state.selectedH2HPeriod = e.target.value;
+          renderH2H();
+        });
+
         document.getElementById('matchesSearch').addEventListener('input', renderAllMatches);
+        document.getElementById('matchesYearFilter').addEventListener('change', renderAllMatches);
         document.getElementById('matchesVenueFilter').addEventListener('change', renderAllMatches);
         document.getElementById('matchesOutcomeFilter').addEventListener('change', renderAllMatches);
         document.getElementById('resetMatchFiltersBtn').addEventListener('click', () => {
           document.getElementById('matchesSearch').value = '';
+          document.getElementById('matchesYearFilter').value = 'ALL';
           document.getElementById('matchesVenueFilter').value = 'ALL';
           document.getElementById('matchesOutcomeFilter').value = 'ALL';
           renderAllMatches();
@@ -1238,8 +1396,8 @@
 
         document.getElementById('shareAppBtn').addEventListener('click', async () => {
           const shareData = {
-            title: 'WATA Tour 2026 — Ranking & H2H',
-            text: 'Revisa el Ranking Race 2026 y tu historial Cara a Cara del WATA Tour:',
+            title: 'WATA Tour — Ranking & H2H (2025–2026)',
+            text: 'Revisa el Ranking Race (2025 y 2026) y el historial Cara a Cara del WATA Tour:',
             url: window.location.href
           };
           if (navigator.share) {
@@ -1255,12 +1413,9 @@
         });
       }
 
-      // =========================================================================
-      // 12. ARRANQUE INICIAL
-      // =========================================================================
       initEvents();
       loadAllFromSheets();
     })();
   </script>
-</body>
-</html>
+
+</body></html>
