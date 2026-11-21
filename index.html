@@ -21,6 +21,7 @@
   <meta property="og:image" content="https://rodrigosotomaureira.github.io/wata-tour/logo.jpg">
   <meta property="og:type" content="website">
 
+  <!-- Tailwind CSS y Fuente Inter -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -47,6 +48,13 @@
     }
     .sync-pulse {
       animation: pulseDot 2s infinite ease-in-out;
+    }
+    @keyframes modalSlideUp {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-animate {
+      animation: modalSlideUp 0.22s ease-out forwards;
     }
   </style>
 </head>
@@ -122,7 +130,7 @@
   </div>
 
   <!-- TOAST NOTIFICACIÓN DESCARGA / COMPARTIR -->
-  <div id="whatsappToast" class="fixed bottom-5 right-5 z-50 hidden max-w-sm bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-emerald-500/40 text-xs sm:text-sm flex items-center gap-2.5">
+  <div id="whatsappToast" class="fixed bottom-5 right-5 z-[60] hidden max-w-sm bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-emerald-500/40 text-xs sm:text-sm flex items-center gap-2.5">
     <span class="text-base">📸</span>
     <span id="whatsappToastText">Imagen lista para WhatsApp</span>
   </div>
@@ -192,7 +200,7 @@
             <span class="text-base">👥</span>
           </div>
           <div id="kpiPlayersCount" class="mt-2 text-2xl font-extrabold text-slate-900">0</div>
-          <div class="mt-0.5 text-xs text-slate-500">Toca un jugador para ver H2H</div>
+          <div class="mt-0.5 text-xs text-emerald-700 font-semibold">Toca un jugador para ver su ficha</div>
         </div>
       </div>
 
@@ -358,13 +366,78 @@
 
   </main>
 
+  <!-- =========================================================
+       MODAL / DRAWER: FICHA TÉCNICA OFICIAL DEL JUGADOR
+       ========================================================= -->
+  <div id="playerProfileModal" class="fixed inset-0 z-50 hidden flex items-end sm:items-center justify-center bg-slate-950/75 backdrop-blur-xs p-0 sm:p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="profileModalPlayerName">
+    <div id="playerProfileBackdrop" class="fixed inset-0"></div>
+
+    <div class="relative z-10 w-full max-w-2xl bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] flex flex-col modal-animate">
+      <!-- Encabezado Oscuro ATP / WATA -->
+      <div class="bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 text-white px-5 py-5 sm:px-6 sm:py-6 shrink-0 border-b border-emerald-900/60">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-[11px] font-bold uppercase tracking-wider mb-2">
+              <span>🎾 Ficha Oficial WATA Tour</span>
+              <span id="profileModalRankBadge" class="text-white font-black">• #1</span>
+            </div>
+            <h2 id="profileModalPlayerName" class="text-xl sm:text-2xl font-black tracking-tight text-white truncate">
+              Jugador
+            </h2>
+            <p id="profileModalSubtitle" class="text-xs text-slate-300 mt-0.5">
+              Estadísticas oficiales en vivo
+            </p>
+          </div>
+
+          <button id="closePlayerProfileBtn" type="button" aria-label="Cerrar ficha" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 transition cursor-pointer shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Selector de período dentro de la ficha -->
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-white/10">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-300">Período de análisis:</span>
+          <div class="inline-flex rounded-xl bg-slate-900/90 p-1 border border-slate-700/80">
+            <button type="button" data-profile-period="2026" class="profile-period-btn px-3 py-1 rounded-lg text-xs font-extrabold transition cursor-pointer bg-emerald-500 text-slate-950">
+              2026
+            </button>
+            <button type="button" data-profile-period="2025" class="profile-period-btn px-3 py-1 rounded-lg text-xs font-extrabold transition cursor-pointer text-slate-300 hover:text-white">
+              2025
+            </button>
+            <button type="button" data-profile-period="ALL" class="profile-period-btn px-3 py-1 rounded-lg text-xs font-extrabold transition cursor-pointer text-slate-300 hover:text-white">
+              Histórico (25–26)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuerpo desplazable de la Ficha -->
+      <div id="playerProfileBody" class="p-5 sm:p-6 overflow-y-auto space-y-5 bg-slate-50/70">
+        <!-- Se rellena dinámicamente -->
+      </div>
+
+      <!-- Pie de acciones de la Ficha -->
+      <div class="p-4 sm:px-6 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 shrink-0">
+        <button id="profileGoH2HBtn" type="button" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-extrabold transition cursor-pointer">
+          <span>⚔️ Comparar en Cara a Cara (H2H)</span>
+        </button>
+
+        <button id="profileShareWhatsappBtn" type="button" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#1ebe5d] active:bg-[#19a851] text-slate-950 text-xs sm:text-sm font-extrabold shadow-sm transition cursor-pointer">
+          <span>📸 Enviar Ficha por WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer class="border-t border-slate-200 bg-white mt-10 py-5 px-4 text-center text-xs text-slate-500">
     WATA Tour • Conectado en vivo a Google Sheets (Race 2025, Amistosos 2025, Race 2026 &amp; Amistosos 2026).
   </footer>
 
   <!-- =========================================================
-       SCRIPT PRINCIPAL + GENERADOR DE IMÁGENES PARA WHATSAPP
+       SCRIPT PRINCIPAL + FICHA JUGADOR + GENERADOR WHATSAPP PNG
        ========================================================= -->
   <script>
     (function () {
@@ -388,7 +461,9 @@
         allPlayerNames: [],
         activeTab: 'ranking',
         selectedRaceYear: '2026',
-        selectedH2HPeriod: 'ALL'
+        selectedH2HPeriod: 'ALL',
+        profilePlayerName: null,
+        profilePeriod: '2026'
       };
 
       function showToast(msg) {
@@ -883,7 +958,6 @@
         }
       }
 
-      // Fetch directo + fallbacks CORS confiables + respaldo en caché local (localStorage)
       async function fetchCsvResilient(url, sheetLabel, cacheKey) {
         const cacheBuster = `_t=${Date.now()}`;
         const urlWithBuster = url.includes('?') ? `${url}&${cacheBuster}` : `${url}?${cacheBuster}`;
@@ -1035,6 +1109,9 @@
         renderH2H();
         populateVenueFilter();
         renderAllMatches();
+        if (state.profilePlayerName) {
+          renderPlayerProfileModal();
+        }
       }
 
       function formatPoints(n) {
@@ -1048,6 +1125,337 @@
 
         document.getElementById('headerMatchCountBadge').textContent = `${totalHistorical} Partidos (${m25} en '25 • ${m26} en '26)`;
         document.getElementById('tabMatchCount').textContent = totalHistorical;
+      }
+
+      // =========================================================================
+      // MOTOR DE CÁLCULO DE ESTADÍSTICAS INDIVIDUALES (FICHA DEL JUGADOR)
+      // =========================================================================
+      function computePlayerAnalytics(playerName, period) {
+        const pKey = normKey(playerName);
+
+        const s26 = state.seasons['2026'].players.find(p => p.key === pKey);
+        const s25 = state.seasons['2025'].players.find(p => p.key === pKey);
+
+        let rankDisplay = '—';
+        let totalPts = 0;
+        let amistososPts = 0;
+        let torneosPts = 0;
+        let gapToFirst = null;
+        let gapToTop8 = null;
+        let isTop8 = false;
+
+        if (period === '2026' || period === '2025') {
+          const seasonPlayers = state.seasons[period].players;
+          const pSeason = seasonPlayers.find(p => p.key === pKey);
+          if (pSeason) {
+            rankDisplay = `#${pSeason.rank}`;
+            totalPts = pSeason.total;
+            amistososPts = pSeason.amistosos;
+            torneosPts = pSeason.torneos;
+
+            const leader = seasonPlayers[0];
+            if (leader && pSeason.rank > 1) {
+              gapToFirst = Math.max(0, leader.total - pSeason.total);
+            } else if (leader && pSeason.rank === 1) {
+              gapToFirst = 0;
+            }
+
+            if (pSeason.rank <= 8) {
+              isTop8 = true;
+              gapToTop8 = 0;
+            } else if (seasonPlayers[7]) {
+              gapToTop8 = Math.max(0, seasonPlayers[7].total - pSeason.total);
+            }
+          }
+        } else {
+          totalPts = (s26 ? s26.total : 0) + (s25 ? s25.total : 0);
+          amistososPts = (s26 ? s26.amistosos : 0) + (s25 ? s25.amistosos : 0);
+          torneosPts = (s26 ? s26.torneos : 0) + (s25 ? s25.torneos : 0);
+          rankDisplay = s26 ? `#${s26.rank} ('26)` : (s25 ? `#${s25.rank} ('25)` : '—');
+        }
+
+        const sourceMatches = period === 'ALL' ? state.allMatches : state.seasons[period].matches;
+        const playerMatchesAsc = sourceMatches
+          .filter(m => normKey(m.p1) === pKey || normKey(m.p2) === pKey)
+          .sort((a, b) => Number(a.season) - Number(b.season) || a.id - b.id);
+
+        let pj = 0, g = 0, e = 0, p = 0;
+        let currentWinStreak = 0;
+        let bestWinStreak = 0;
+        let currentUnbeatenStreak = 0;
+        let bestUnbeatenStreak = 0;
+
+        const formTimeline = [];
+        const rivalsMap = new Map();
+
+        playerMatchesAsc.forEach(m => {
+          pj++;
+          const isP1 = normKey(m.p1) === pKey;
+          const rivalName = isP1 ? m.p2 : m.p1;
+          const rivalKey = normKey(rivalName);
+          const ptsEarned = isP1 ? m.pt1 : m.pt2;
+          const winKey = normKey(m.winner);
+
+          let outcomeCode = 'P';
+          if (winKey === 'empate') {
+            e++;
+            outcomeCode = 'E';
+            currentWinStreak = 0;
+            currentUnbeatenStreak++;
+          } else if (winKey === pKey) {
+            g++;
+            outcomeCode = 'G';
+            currentWinStreak++;
+            currentUnbeatenStreak++;
+          } else {
+            p++;
+            outcomeCode = 'P';
+            currentWinStreak = 0;
+            currentUnbeatenStreak = 0;
+          }
+
+          if (currentWinStreak > bestWinStreak) bestWinStreak = currentWinStreak;
+          if (currentUnbeatenStreak > bestUnbeatenStreak) bestUnbeatenStreak = currentUnbeatenStreak;
+
+          formTimeline.push({
+            code: outcomeCode,
+            rival: rivalName,
+            score: m.score,
+            fecha: m.fecha,
+            season: m.season,
+            id: m.id,
+            recinto: m.recinto,
+            pts: ptsEarned
+          });
+
+          if (!rivalsMap.has(rivalKey)) {
+            rivalsMap.set(rivalKey, { name: rivalName, pj: 0, g: 0, e: 0, p: 0 });
+          }
+          const rStat = rivalsMap.get(rivalKey);
+          rStat.pj++;
+          if (outcomeCode === 'G') rStat.g++;
+          else if (outcomeCode === 'E') rStat.e++;
+          else rStat.p++;
+        });
+
+        const eff = pj > 0 ? Math.round(((g + e * 0.5) / pj) * 1000) / 10 : 0;
+
+        const rivalsList = Array.from(rivalsMap.values());
+        const mostFrequentRival = rivalsList.length > 0
+          ? [...rivalsList].sort((a, b) => b.pj - a.pj || b.g - a.g)[0]
+          : null;
+
+        const bestClientCandidates = rivalsList
+          .filter(r => (r.g - r.p) > 0)
+          .sort((a, b) => (b.g - b.p) - (a.g - a.p) || b.g - a.g);
+        const bestClient = bestClientCandidates[0] || null;
+
+        const nemesisCandidates = rivalsList
+          .filter(r => (r.p - r.g) > 0)
+          .sort((a, b) => (b.p - b.g) - (a.p - a.g) || b.p - a.p);
+        const nemesis = nemesisCandidates[0] || null;
+
+        const last5Chronological = formTimeline.slice(-5);
+        const last5RecentFirst = [...last5Chronological].reverse();
+
+        return {
+          jugador: playerName,
+          period,
+          rankDisplay,
+          totalPts,
+          amistososPts,
+          torneosPts,
+          gapToFirst,
+          gapToTop8,
+          isTop8,
+          pj,
+          g,
+          e,
+          p,
+          eff,
+          currentWinStreak,
+          bestWinStreak,
+          currentUnbeatenStreak,
+          bestUnbeatenStreak,
+          mostFrequentRival,
+          bestClient,
+          nemesis,
+          last5Chronological,
+          last5RecentFirst
+        };
+      }
+
+      function openPlayerProfileModal(playerName) {
+        state.profilePlayerName = playerName;
+        state.profilePeriod = state.selectedRaceYear;
+        const modal = document.getElementById('playerProfileModal');
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        renderPlayerProfileModal();
+      }
+
+      function closePlayerProfileModal() {
+        state.profilePlayerName = null;
+        document.getElementById('playerProfileModal').classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+
+      function renderPlayerProfileModal() {
+        if (!state.profilePlayerName) return;
+        const stats = computePlayerAnalytics(state.profilePlayerName, state.profilePeriod);
+
+        document.querySelectorAll('.profile-period-btn').forEach(btn => {
+          const isSelected = btn.getAttribute('data-profile-period') === state.profilePeriod;
+          btn.className = isSelected
+            ? 'profile-period-btn px-3 py-1 rounded-lg text-xs font-extrabold transition cursor-pointer bg-emerald-500 text-slate-950'
+            : 'profile-period-btn px-3 py-1 rounded-lg text-xs font-extrabold transition cursor-pointer text-slate-300 hover:text-white';
+        });
+
+        document.getElementById('profileModalPlayerName').textContent = stats.jugador;
+        document.getElementById('profileModalRankBadge').textContent = `• Puesto ${stats.rankDisplay}`;
+
+        const periodLabel = stats.period === 'ALL'
+          ? 'Historial Completo (Temporadas 2025 y 2026)'
+          : `Temporada Oficial ${stats.period}`;
+        document.getElementById('profileModalSubtitle').textContent = periodLabel;
+
+        let rankContextHtml = '';
+        if (stats.period !== 'ALL' && stats.rankDisplay !== '—') {
+          const leaderChip = stats.gapToFirst === 0
+            ? `<span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 text-xs font-extrabold">👑 Líder Actual del Circuito</span>`
+            : `<span class="px-2.5 py-1 rounded-lg bg-slate-200/80 text-slate-700 text-xs font-bold">A ${formatPoints(stats.gapToFirst)} pts del #1</span>`;
+
+          const mastersChip = stats.isTop8
+            ? `<span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-extrabold">✅ Zona Clasificación Top 8 Masters</span>`
+            : (stats.gapToTop8 !== null
+              ? `<span class="px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold">🎯 A ${formatPoints(stats.gapToTop8)} pts del Top 8</span>`
+              : '');
+
+          rankContextHtml = `<div class="flex flex-wrap gap-2">${leaderChip}${mastersChip}</div>`;
+        }
+
+        const formBubblesHtml = stats.last5Chronological.length > 0
+          ? stats.last5Chronological.map(item => {
+              const cls = item.code === 'G'
+                ? 'bg-emerald-500 text-white ring-2 ring-emerald-200'
+                : (item.code === 'E'
+                  ? 'bg-amber-400 text-slate-950 ring-2 ring-amber-200'
+                  : 'bg-rose-500 text-white ring-2 ring-rose-200');
+              return `
+                <div title="vs ${item.rival} (${item.score})" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black ${cls}">
+                  ${item.code}
+                </div>
+              `;
+            }).join('')
+          : `<span class="text-xs text-slate-400">Sin partidos en este período</span>`;
+
+        const classicHtml = stats.mostFrequentRival
+          ? `<div class="font-extrabold text-slate-900 text-sm truncate">${stats.mostFrequentRival.name}</div>
+             <div class="text-xs text-slate-600 mt-0.5">${stats.mostFrequentRival.pj} cruces (${stats.mostFrequentRival.g}G - ${stats.mostFrequentRival.e}E - ${stats.mostFrequentRival.p}P)</div>`
+          : `<div class="text-xs text-slate-400 mt-1">Sin datos suficientes</div>`;
+
+        const clientHtml = stats.bestClient
+          ? `<div class="font-extrabold text-emerald-800 text-sm truncate">${stats.bestClient.name}</div>
+             <div class="text-xs font-bold text-emerald-600 mt-0.5">Historial ${stats.bestClient.g} - ${stats.bestClient.p}${stats.bestClient.e > 0 ? ` (${stats.bestClient.e}E)` : ''}</div>`
+          : `<div class="text-xs text-slate-400 mt-1">Sin saldo positivo aún</div>`;
+
+        const nemesisHtml = stats.nemesis
+          ? `<div class="font-extrabold text-rose-800 text-sm truncate">${stats.nemesis.name}</div>
+             <div class="text-xs font-bold text-rose-600 mt-0.5">Historial ${stats.nemesis.g} - ${stats.nemesis.p}${stats.nemesis.e > 0 ? ` (${stats.nemesis.e}E)` : ''}</div>`
+          : `<div class="text-xs text-slate-400 mt-1">Sin saldo negativo aún</div>`;
+
+        const recentMatchesHtml = stats.last5RecentFirst.length > 0
+          ? stats.last5RecentFirst.map(m => {
+              const badgeCls = m.code === 'G'
+                ? 'bg-emerald-100 text-emerald-800'
+                : (m.code === 'E' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800');
+              const labelTxt = m.code === 'G' ? 'Victoria' : (m.code === 'E' ? 'Empate' : 'Derrota');
+              return `
+                <div class="flex items-center justify-between gap-2 bg-white p-2.5 rounded-xl border border-slate-200/80 text-xs">
+                  <div class="min-w-0">
+                    <div class="font-bold text-slate-900 truncate">vs. ${m.rival}</div>
+                    <div class="text-[11px] text-slate-500">${m.fecha} • ${m.recinto}</div>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="font-mono font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md">${m.score}</span>
+                    <span class="px-2 py-0.5 rounded-md font-extrabold ${badgeCls}">${labelTxt}</span>
+                  </div>
+                </div>
+              `;
+            }).join('')
+          : `<div class="text-xs text-slate-400 bg-white p-4 rounded-xl border border-slate-200 text-center">No registra partidos en este período.</div>`;
+
+        document.getElementById('playerProfileBody').innerHTML = `
+          ${rankContextHtml}
+
+          <!-- Bloque 1: Puntos Race y Récord -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-2xs">
+              <div class="text-[11px] font-bold uppercase text-slate-400">Puntos Race</div>
+              <div class="text-xl font-black text-emerald-700 mt-1">${formatPoints(stats.totalPts)}</div>
+              <div class="text-[10px] text-slate-500 mt-0.5">Amist: ${formatPoints(stats.amistososPts)} • Torn: ${formatPoints(stats.torneosPts)}</div>
+            </div>
+
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-2xs">
+              <div class="text-[11px] font-bold uppercase text-slate-400">Partidos (PJ)</div>
+              <div class="text-xl font-black text-slate-900 mt-1">${stats.pj}</div>
+              <div class="text-[11px] font-bold mt-0.5">
+                <span class="text-emerald-600">${stats.g}G</span> •
+                <span class="text-amber-600">${stats.e}E</span> •
+                <span class="text-rose-600">${stats.p}P</span>
+              </div>
+            </div>
+
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-2xs">
+              <div class="text-[11px] font-bold uppercase text-slate-400">Efectividad</div>
+              <div class="text-xl font-black text-slate-900 mt-1">${stats.eff.toFixed(1)}%</div>
+              <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mt-1.5">
+                <div class="h-full bg-emerald-500 rounded-full" style="width: ${Math.min(100, stats.eff)}%"></div>
+              </div>
+            </div>
+
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-2xs">
+              <div class="text-[11px] font-bold uppercase text-slate-400">Racha Activa</div>
+              <div class="text-xl font-black text-slate-900 mt-1">${stats.currentWinStreak > 0 ? `🔥 ${stats.currentWinStreak}V` : (stats.currentUnbeatenStreak > 0 ? `🛡️ ${stats.currentUnbeatenStreak} Inv.` : '0')}</div>
+              <div class="text-[10px] text-slate-500 mt-0.5">Mejor racha: ${stats.bestWinStreak} victorias</div>
+            </div>
+          </div>
+
+          <!-- Bloque 2: Forma Reciente -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <div class="text-xs font-extrabold uppercase tracking-wider text-slate-700">Forma Reciente (Últimos 5)</div>
+              <div class="text-[11px] text-slate-500">De izquierda (más antiguo) a derecha (último partido)</div>
+            </div>
+            <div class="flex items-center gap-2">
+              ${formBubblesHtml}
+            </div>
+          </div>
+
+          <!-- Bloque 3: Rivalidades Clave -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-2xs">
+              <div class="text-[11px] font-extrabold uppercase text-slate-500 mb-1">🤝 El Clásico (Más jugado)</div>
+              ${classicHtml}
+            </div>
+            <div class="bg-emerald-50/60 p-3.5 rounded-2xl border border-emerald-200/80 shadow-2xs">
+              <div class="text-[11px] font-extrabold uppercase text-emerald-800 mb-1">👑 Mejor Cliente</div>
+              ${clientHtml}
+            </div>
+            <div class="bg-rose-50/60 p-3.5 rounded-2xl border border-rose-200/80 shadow-2xs">
+              <div class="text-[11px] font-extrabold uppercase text-rose-800 mb-1">💀 Bestia Negra</div>
+              ${nemesisHtml}
+            </div>
+          </div>
+
+          <!-- Bloque 4: Últimos 5 Partidos -->
+          <div class="space-y-2">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-slate-700">📋 Últimos 5 Partidos Disputados</div>
+            <div class="space-y-2">
+              ${recentMatchesHtml}
+            </div>
+          </div>
+        `;
       }
 
       // =========================================================================
@@ -1071,11 +1479,9 @@
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, width, 195);
 
-        // Franja acento superior verde esmeralda
         ctx.fillStyle = '#10b981';
         ctx.fillRect(0, 0, width, 10);
 
-        // Badge Circuito
         ctx.fillStyle = 'rgba(16, 185, 129, 0.18)';
         roundRect(ctx, 56, 34, 330, 36, 18);
         ctx.fill();
@@ -1083,7 +1489,6 @@
         ctx.font = '700 16px Inter, sans-serif';
         ctx.fillText('🎾 CIRCUITO OFICIAL WATA TOUR', 74, 58);
 
-        // Fecha de emisión
         const todayStr = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
         ctx.fillStyle = '#94a3b8';
         ctx.font = '600 18px Inter, sans-serif';
@@ -1091,7 +1496,6 @@
         ctx.fillText(`Actualizado: ${todayStr}`, width - 56, 58);
         ctx.textAlign = 'left';
 
-        // Título principal
         ctx.fillStyle = '#ffffff';
         ctx.font = '900 46px Inter, sans-serif';
         ctx.fillText('WATA TOUR', 56, 122);
@@ -1127,7 +1531,6 @@
 
             const file = new File([blob], filename, { type: 'image/png' });
 
-            // 1. En celulares (iOS Safari / Android Chrome) abre hoja nativa con WhatsApp directo + foto adjunta
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
               try {
                 await navigator.share({
@@ -1145,7 +1548,6 @@
               }
             }
 
-            // 2. Fallback PC / navegadores sin Share de archivos: descarga PNG + copia imagen al portapapeles + abre WhatsApp
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -1169,14 +1571,172 @@
                 : '📸 Imagen descargada. Adjúntala en tu chat de WhatsApp.'
             );
 
-            const wspUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
-            window.open(wspUrl, '_blank', 'noopener,noreferrer');
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+            window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
             resolve();
           }, 'image/png');
         });
       }
 
-      // 1. GENERAR FOTO DEL RANKING RACE COMPLETO (TODOS LOS JUGADORES)
+      // 1. GENERAR FOTO DE FICHA DE JUGADOR (SIN SUPERFICIE NI RECINTO)
+      async function generateAndSharePlayerProfileImage() {
+        if (!state.profilePlayerName) return;
+        const stats = computePlayerAnalytics(state.profilePlayerName, state.profilePeriod);
+
+        const width = 1080;
+        const height = 920;
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = '#f1f5f9';
+        ctx.fillRect(0, 0, width, height);
+
+        const periodSubtitle = stats.period === 'ALL'
+          ? 'FICHA OFICIAL DE JUGADOR • HISTÓRICO 2025–2026'
+          : `FICHA OFICIAL DE JUGADOR • TEMPORADA ${stats.period}`;
+        drawHeaderGraphic(ctx, width, periodSubtitle);
+
+        const heroY = 220;
+        const heroGrad = ctx.createLinearGradient(56, heroY, width - 56, heroY + 145);
+        heroGrad.addColorStop(0, '#0f172a');
+        heroGrad.addColorStop(1, '#064e3b');
+        ctx.fillStyle = heroGrad;
+        roundRect(ctx, 56, heroY, width - 112, 145, 22);
+        ctx.fill();
+
+        ctx.fillStyle = '#34d399';
+        ctx.font = '900 44px Inter, sans-serif';
+        ctx.fillText(stats.rankDisplay, 92, heroY + 86);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 38px Inter, sans-serif';
+        ctx.fillText(stats.jugador, 240, heroY + 72);
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '700 20px Inter, sans-serif';
+        ctx.fillText(
+          `Total Race: ${formatPoints(stats.totalPts)} pts  •  Efectividad: ${stats.eff.toFixed(1)}%`,
+          240,
+          heroY + 112
+        );
+
+        const kpiY = 390;
+        const boxW = 228;
+        const boxes = [
+          { title: 'TOTAL RACE', val: `${formatPoints(stats.totalPts)} pts`, sub: `Amist: ${formatPoints(stats.amistososPts)}` },
+          { title: 'RÉCORD (PJ)', val: `${stats.pj} PJ`, sub: `${stats.g}G - ${stats.e}E - ${stats.p}P` },
+          { title: 'EFECTIVIDAD', val: `${stats.eff.toFixed(1)}%`, sub: `Torneos: ${formatPoints(stats.torneosPts)}` },
+          { title: 'MEJOR RACHA', val: `${stats.bestWinStreak} Vic.`, sub: `Actual: ${stats.currentWinStreak}V` }
+        ];
+
+        boxes.forEach((b, i) => {
+          const bx = 56 + i * (boxW + 18);
+          ctx.fillStyle = '#ffffff';
+          roundRect(ctx, bx, kpiY, boxW, 130, 18);
+          ctx.fill();
+          ctx.strokeStyle = '#cbd5e1';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          ctx.fillStyle = '#64748b';
+          ctx.font = '800 14px Inter, sans-serif';
+          ctx.fillText(b.title, bx + 20, kpiY + 34);
+
+          ctx.fillStyle = '#0f172a';
+          ctx.font = '900 28px Inter, sans-serif';
+          ctx.fillText(b.val, bx + 20, kpiY + 76);
+
+          ctx.fillStyle = '#059669';
+          ctx.font = '700 16px Inter, sans-serif';
+          ctx.fillText(b.sub, bx + 20, kpiY + 108);
+        });
+
+        const formY = 545;
+        ctx.fillStyle = '#ffffff';
+        roundRect(ctx, 56, formY, width - 112, 95, 18);
+        ctx.fill();
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '800 20px Inter, sans-serif';
+        ctx.fillText('FORMA RECIENTE (ÚLTIMOS 5 PARTIDOS)', 84, formY + 55);
+
+        stats.last5Chronological.forEach((item, idx) => {
+          const cx = width - 310 + idx * 54;
+          const cy = formY + 48;
+          ctx.beginPath();
+          ctx.arc(cx, cy, 21, 0, Math.PI * 2);
+          ctx.fillStyle = item.code === 'G' ? '#10b981' : (item.code === 'E' ? '#f59e0b' : '#ef4444');
+          ctx.fill();
+
+          ctx.fillStyle = item.code === 'E' ? '#0f172a' : '#ffffff';
+          ctx.font = '900 18px Inter, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(item.code, cx, cy + 6);
+          ctx.textAlign = 'left';
+        });
+
+        const rivY = 665;
+        const rivW = 310;
+        const rivalries = [
+          {
+            label: '🤝 EL CLÁSICO (MÁS JUGADO)',
+            name: stats.mostFrequentRival ? stats.mostFrequentRival.name : 'Sin datos',
+            detail: stats.mostFrequentRival ? `${stats.mostFrequentRival.pj} PJ (${stats.mostFrequentRival.g}G-${stats.mostFrequentRival.p}P)` : '—',
+            bg: '#ffffff',
+            accent: '#0f172a'
+          },
+          {
+            label: '👑 MEJOR CLIENTE',
+            name: stats.bestClient ? stats.bestClient.name : 'Sin saldo +',
+            detail: stats.bestClient ? `Serie ${stats.bestClient.g} - ${stats.bestClient.p}` : '—',
+            bg: '#ecfdf5',
+            accent: '#047857'
+          },
+          {
+            label: '💀 BESTIA NEGRA',
+            name: stats.nemesis ? stats.nemesis.name : 'Sin saldo -',
+            detail: stats.nemesis ? `Serie ${stats.nemesis.g} - ${stats.nemesis.p}` : '—',
+            bg: '#fff1f2',
+            accent: '#be123c'
+          }
+        ];
+
+        rivalries.forEach((r, i) => {
+          const rx = 56 + i * (rivW + 19);
+          ctx.fillStyle = r.bg;
+          roundRect(ctx, rx, rivY, rivW, 145, 18);
+          ctx.fill();
+          ctx.strokeStyle = '#cbd5e1';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          ctx.fillStyle = '#64748b';
+          ctx.font = '800 14px Inter, sans-serif';
+          ctx.fillText(r.label, rx + 20, rivY + 34);
+
+          ctx.fillStyle = r.accent;
+          ctx.font = '900 22px Inter, sans-serif';
+          const shortName = r.name.length > 20 ? r.name.slice(0, 19) + '…' : r.name;
+          ctx.fillText(shortName, rx + 20, rivY + 78);
+
+          ctx.fillStyle = '#334155';
+          ctx.font = '700 16px Inter, sans-serif';
+          ctx.fillText(r.detail, rx + 20, rivY + 114);
+        });
+
+        drawFooterGraphic(ctx, width, height);
+
+        await shareOrDownloadCanvas(
+          canvas,
+          `WATA-Ficha-${stats.jugador.replace(/\s+/g, '_')}-${stats.period}.png`,
+          `Ficha Oficial: ${stats.jugador} — WATA Tour`,
+          `🎾 Ficha Oficial WATA Tour (${stats.period}): ${stats.jugador} | Puesto ${stats.rankDisplay} | ${formatPoints(stats.totalPts)} pts (${stats.g}G-${stats.e}E-${stats.p}P).`
+        );
+      }
+
+      // 2. GENERAR FOTO DEL RANKING RACE COMPLETO (TODOS LOS JUGADORES)
       async function generateAndShareRankingImage() {
         const year = state.selectedRaceYear;
         const seasonData = state.seasons[year];
@@ -1196,7 +1756,6 @@
         canvas.height = height;
         const ctx = canvas.getContext('2d');
 
-        // Fondo general
         ctx.fillStyle = '#f1f5f9';
         ctx.fillRect(0, 0, width, height);
 
@@ -1205,7 +1764,6 @@
           : `RANKING RACE 2025 — TABLA FINAL (${fullList.length} JUGADORES)`;
         drawHeaderGraphic(ctx, width, titleSuffix);
 
-        // Tarjetas resumen superiores
         const leader = fullList[0];
         const mostActive = [...fullList].sort((a, b) => b.pj - a.pj || b.g - a.g)[0];
 
@@ -1240,7 +1798,6 @@
           ctx.fillText(k.sub, x + 20, y + 92);
         });
 
-        // Encabezado de tabla
         const tableY = 348;
         ctx.fillStyle = '#0f172a';
         roundRect(ctx, 56, tableY, width - 112, 48, 12);
@@ -1259,14 +1816,12 @@
         ctx.fillText('EFECT.', width - 80, tableY + 30);
         ctx.textAlign = 'left';
 
-        // Filas de todos los jugadores
         fullList.forEach((p, idx) => {
           const y = tableY + 56 + idx * rowHeight;
           ctx.fillStyle = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
           roundRect(ctx, 56, y, width - 112, rowHeight - 6, 12);
           ctx.fill();
 
-          // Medalla o número
           let badgeBg = '#e2e8f0';
           let badgeFg = '#334155';
           let rankTxt = String(p.rank);
@@ -1284,29 +1839,24 @@
           ctx.fillText(rankTxt, 101, y + 34);
           ctx.textAlign = 'left';
 
-          // Nombre jugador
           ctx.fillStyle = '#0f172a';
           ctx.font = '800 21px Inter, sans-serif';
           ctx.fillText(p.jugador, 150, y + 35);
 
-          // Total Race
           ctx.fillStyle = '#047857';
           ctx.font = '900 23px Inter, sans-serif';
           ctx.textAlign = 'right';
           ctx.fillText(formatPoints(p.total), 660, y + 36);
 
-          // PJ
           ctx.fillStyle = '#334155';
           ctx.font = '700 19px Inter, sans-serif';
           ctx.textAlign = 'center';
           ctx.fillText(String(p.pj), 745, y + 35);
 
-          // G - E - P
           ctx.fillStyle = '#0f172a';
           ctx.font = '700 18px Inter, sans-serif';
           ctx.fillText(`${p.g} - ${p.e} - ${p.p}`, 865, y + 35);
 
-          // % Efectividad
           ctx.fillStyle = '#475569';
           ctx.font = '700 18px Inter, sans-serif';
           ctx.textAlign = 'right';
@@ -1324,7 +1874,7 @@
         );
       }
 
-      // 2. GENERAR FOTO DEL DUELO H2H (CARA A CARA)
+      // 3. GENERAR FOTO DEL DUELO H2H (CARA A CARA)
       async function generateAndShareH2HImage() {
         const p1 = document.getElementById('h2hPlayer1').value;
         const p2 = document.getElementById('h2hPlayer2').value;
@@ -1379,7 +1929,6 @@
         const periodText = period === 'ALL' ? 'HISTÓRICO (2025–2026)' : `TEMPORADA ${period}`;
         drawHeaderGraphic(ctx, width, `CARA A CARA (H2H) • ${periodText}`);
 
-        // Marcador Central Oscuro
         const boardY = 220;
         const boardH = 310;
         const boardGrad = ctx.createLinearGradient(56, boardY, width - 56, boardY + boardH);
@@ -1389,7 +1938,6 @@
         roundRect(ctx, 56, boardY, width - 112, boardH, 24);
         ctx.fill();
 
-        // Jugador 1
         ctx.textAlign = 'center';
         ctx.fillStyle = '#6ee7b7';
         ctx.font = '800 16px Inter, sans-serif';
@@ -1414,7 +1962,6 @@
           ctx.fillText(`2025: ${w1_25}  •  2026: ${w1_26}`, 240, boardY + 266);
         }
 
-        // Centro VS / Total / Empates
         ctx.strokeStyle = 'rgba(148, 163, 184, 0.28)';
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -1439,7 +1986,6 @@
         ctx.font = '800 18px Inter, sans-serif';
         ctx.fillText(`${draws} ${draws === 1 ? 'EMPATE' : 'EMPATES'}`, 540, boardY + 212);
 
-        // Jugador 2
         ctx.fillStyle = '#6ee7b7';
         ctx.font = '800 16px Inter, sans-serif';
         ctx.fillText('JUGADOR 2', 840, boardY + 48);
@@ -1465,7 +2011,6 @@
 
         ctx.textAlign = 'left';
 
-        // Lista de últimos enfrentamientos
         const listY = boardY + boardH + 34;
         ctx.fillStyle = '#0f172a';
         ctx.font = '800 22px Inter, sans-serif';
@@ -1525,7 +2070,7 @@
         );
       }
 
-      // 3. GENERAR FOTO DE UN PARTIDO INDIVIDUAL (DESDE HISTORIAL O H2H)
+      // 4. GENERAR FOTO DE UN PARTIDO INDIVIDUAL
       async function generateAndShareMatchImage(matchUid) {
         const m = state.allMatches.find(item => item.uid === matchUid);
         if (!m) {
@@ -1539,7 +2084,6 @@
         const p1Won = !isDraw && normKey(m.winner) === k1;
         const p2Won = !isDraw && normKey(m.winner) === k2;
 
-        // Calcular H2H histórico entre ambos para incluirlo en la placa del duelo
         let h2h1 = 0, h2h2 = 0, h2hDraws = 0;
         state.allMatches.forEach(item => {
           const mk1 = normKey(item.p1);
@@ -1564,7 +2108,6 @@
 
         drawHeaderGraphic(ctx, width, `RESULTADO OFICIAL • PARTIDO #${m.id} (${m.season})`);
 
-        // Tarjeta del partido
         const cardY = 222;
         const cardH = 420;
         ctx.fillStyle = '#ffffff';
@@ -1574,7 +2117,6 @@
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Metadatos fecha y recinto
         ctx.fillStyle = '#475569';
         ctx.font = '700 20px Inter, sans-serif';
         ctx.fillText(`📅 ${m.fecha}`, 90, cardY + 48);
@@ -1583,7 +2125,6 @@
         ctx.fillText(`📍 ${m.recinto} (${m.superficie})`, width - 90, cardY + 48);
         ctx.textAlign = 'left';
 
-        // Fila Jugador 1
         ctx.fillStyle = p1Won ? '#ecfdf5' : '#f8fafc';
         roundRect(ctx, 84, cardY + 74, width - 168, 86, 16);
         ctx.fill();
@@ -1603,7 +2144,6 @@
         ctx.fillText(`+${m.pt1} pts`, width - 110, cardY + 127);
         ctx.textAlign = 'left';
 
-        // Fila Jugador 2
         ctx.fillStyle = p2Won ? '#ecfdf5' : '#f8fafc';
         roundRect(ctx, 84, cardY + 176, width - 168, 86, 16);
         ctx.fill();
@@ -1623,7 +2163,6 @@
         ctx.fillText(`+${m.pt2} pts`, width - 110, cardY + 229);
         ctx.textAlign = 'left';
 
-        // Marcador por sets y serie H2H
         ctx.fillStyle = '#0f172a';
         roundRect(ctx, 84, cardY + 286, width - 168, 102, 18);
         ctx.fill();
@@ -1664,7 +2203,6 @@
         );
       }
 
-      // Exponer función global para botones de tarjetas dinámicas
       window.__shareWataMatch = generateAndShareMatchImage;
 
       // =========================================================================
@@ -1741,14 +2279,17 @@
           else if (p.rank === 3) { badgeClass = 'bg-orange-100 text-orange-800 ring-1 ring-orange-300'; medal = '🥉 3'; }
 
           return `
-            <tr data-player="${p.jugador}" class="ranking-row hover:bg-emerald-50/70 transition cursor-pointer">
+            <tr data-player="${p.jugador}" title="Ver ficha estadística de ${p.jugador}" class="ranking-row hover:bg-emerald-50/80 transition cursor-pointer group">
               <td class="py-3 px-3 sm:px-4 text-center">
                 <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-lg text-xs font-extrabold ${badgeClass}">
                   ${medal}
                 </span>
               </td>
-              <td class="py-3 px-3 sm:px-4 font-bold text-slate-900">
-                ${p.jugador}
+              <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 group-hover:text-emerald-800">
+                <div class="flex items-center gap-1.5">
+                  <span>${p.jugador}</span>
+                  <span class="text-[11px] font-semibold text-emerald-600 opacity-0 group-hover:opacity-100 transition hidden sm:inline">Ver ficha →</span>
+                </div>
               </td>
               <td class="py-3 px-3 sm:px-4 text-right font-extrabold text-emerald-700">
                 ${formatPoints(p.total)}
@@ -1781,15 +2322,7 @@
         tbody.querySelectorAll('.ranking-row').forEach(row => {
           row.addEventListener('click', () => {
             const selectedName = row.getAttribute('data-player');
-            const p1Select = document.getElementById('h2hPlayer1');
-            const p2Select = document.getElementById('h2hPlayer2');
-            p1Select.value = selectedName;
-            if (p2Select.value === selectedName && state.allPlayerNames.length > 1) {
-              const alt = state.allPlayerNames.find(name => name !== selectedName);
-              if (alt) p2Select.value = alt;
-            }
-            switchTab('h2h');
-            renderH2H();
+            openPlayerProfileModal(selectedName);
           });
         });
       }
@@ -2063,6 +2596,41 @@
         document.getElementById('rankingSearch').addEventListener('input', renderRankingSection);
         document.getElementById('rankingSort').addEventListener('change', renderRankingSection);
 
+        // Eventos del Modal de Ficha de Jugador
+        document.getElementById('closePlayerProfileBtn').addEventListener('click', closePlayerProfileModal);
+        document.getElementById('playerProfileBackdrop').addEventListener('click', closePlayerProfileModal);
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && state.profilePlayerName) {
+            closePlayerProfileModal();
+          }
+        });
+
+        document.querySelectorAll('.profile-period-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.profilePeriod = btn.getAttribute('data-profile-period');
+            renderPlayerProfileModal();
+          });
+        });
+
+        document.getElementById('profileGoH2HBtn').addEventListener('click', () => {
+          const selectedName = state.profilePlayerName;
+          closePlayerProfileModal();
+          if (!selectedName) return;
+
+          const p1Select = document.getElementById('h2hPlayer1');
+          const p2Select = document.getElementById('h2hPlayer2');
+          p1Select.value = selectedName;
+          if (p2Select.value === selectedName && state.allPlayerNames.length > 1) {
+            const alt = state.allPlayerNames.find(name => name !== selectedName);
+            if (alt) p2Select.value = alt;
+          }
+          switchTab('h2h');
+          renderH2H();
+        });
+
+        document.getElementById('profileShareWhatsappBtn').addEventListener('click', generateAndSharePlayerProfileImage);
+
+        // Eventos H2H
         document.getElementById('h2hPlayer1').addEventListener('change', renderH2H);
         document.getElementById('h2hPlayer2').addEventListener('change', renderH2H);
         document.getElementById('h2hSwapBtn').addEventListener('click', () => {
@@ -2079,6 +2647,7 @@
           renderH2H();
         });
 
+        // Eventos Historial
         document.getElementById('matchesSearch').addEventListener('input', renderAllMatches);
         document.getElementById('matchesYearFilter').addEventListener('change', renderAllMatches);
         document.getElementById('matchesVenueFilter').addEventListener('change', renderAllMatches);
