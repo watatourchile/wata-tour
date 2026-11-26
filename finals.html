@@ -788,6 +788,56 @@
       gap: 8px;
     }
 
+    /* Modal de vista previa para imagen PNG generada */
+    .preview-modal-box {
+      max-width: 540px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-height: 90vh;
+    }
+
+    .preview-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .preview-modal-hint {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .preview-img-frame {
+      background: #060913;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: auto;
+      max-height: 52vh;
+    }
+
+    .preview-img-frame img {
+      display: block;
+      max-width: 100%;
+      max-height: 48vh;
+      width: auto;
+      height: auto;
+      border-radius: var(--radius-sm);
+    }
+
+    .preview-action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
     .hidden {
       display: none !important;
     }
@@ -980,6 +1030,27 @@
       <div class="modal-actions">
         <button id="btnCancelReset" type="button" class="btn btn-dark">Cancelar</button>
         <button id="btnConfirmReset" type="button" class="btn btn-emerald">Sí, restaurar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL VISTA PREVIA DE IMAGEN PNG PARA WHATSAPP -->
+  <div id="imagePreviewModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="previewModalTitle">
+    <div class="modal-box preview-modal-box">
+      <div class="preview-modal-header">
+        <div id="previewModalTitle" class="modal-title" style="margin-bottom: 0;">📸 Imagen lista para WhatsApp</div>
+        <button id="btnClosePreviewModal" type="button" class="btn btn-ghost" aria-label="Cerrar vista previa">✕</button>
+      </div>
+      <p class="preview-modal-hint">
+        Si el envío directo no se abrió, descarga el PNG o mantén presionada la imagen / haz clic derecho para copiarla y enviarla por WhatsApp.
+      </p>
+      <div class="preview-img-frame">
+        <img id="previewGeneratedImg" alt="Vista previa de placa o cuadro WATA Finals">
+      </div>
+      <div class="preview-action-bar">
+        <a id="previewDownloadBtn" class="btn btn-emerald" download="WATA-Finals.png">⬇ Descargar PNG</a>
+        <a id="previewNewTabBtn" target="_blank" rel="noopener noreferrer" class="btn btn-dark">↗ Abrir imagen</a>
+        <button id="previewWhatsappTextBtn" type="button" class="btn btn-whatsapp">💬 Abrir WhatsApp</button>
       </div>
     </div>
   </div>
@@ -1609,43 +1680,138 @@
         ctx.closePath();
       }
 
-      async function shareOrDownloadCanvas(canvas, filename, shareTitle, shareText) {
-        return new Promise((resolve) => {
-          canvas.toBlob(async (blob) => {
-            if (!blob) {
-              showToast('No se pudo generar la imagen.');
-              resolve();
-              return;
-            }
+      // Convierte un dataURL PNG en un Blob binario de forma segura
+      function dataUrlToBlob(dataUrl) {
+        try {
+          const parts = dataUrl.split(',');
+          if (parts.length < 2) return null;
+          const mimeMatch = parts[0].match(/:(.*?);/);
+          const mime = mimeMatch ? mimeMatch[1] : 'image/png';
+          const binary = atob(parts[1]);
+          const len = binary.length;
+          const bytes = new Uint8Array(len);
+          for (let i = 0; i < len; i++) {
+            bytes[i] = binary.charCodeAt(i);
+          }
+          return new Blob([bytes], { type: mime });
+        } catch (_) {
+          return null;
+        }
+      }
 
-            const file = new File([blob], filename, { type: 'image/png' });
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-              try {
-                await navigator.share({ files: [file], title: shareTitle, text: shareText });
-                resolve();
-                return;
-              } catch (err) {
-                if (err && err.name === 'AbortError') {
-                  resolve();
+      // Extrae el PNG de forma segura usando toBlob con respaldo a toDataURL
+      function extractCanvasPng(canvas) {
+        return new Promise((resolve) => {
+          let fallbackDataUrl = '';
+          try {
+            fallbackDataUrl = canvas.toDataURL('image/png');
+          } catch (_) {
+            fallbackDataUrl = '';
+          }
+
+          if (typeof canvas.toBlob === 'function') {
+            try {
+              canvas.toBlob((blob) => {
+                if (blob) {
+                  resolve({ blob, dataUrl: fallbackDataUrl || URL.createObjectURL(blob) });
                   return;
                 }
+                const recoveredBlob = fallbackDataUrl ? dataUrlToBlob(fallbackDataUrl) : null;
+                resolve({ blob: recoveredBlob, dataUrl: fallbackDataUrl });
+              }, 'image/png');
+              return;
+            } catch (_) {
+              // Continúa al respaldo de toDataURL
+            }
+          }
+
+          const recoveredBlob = fallbackDataUrl ? dataUrlToBlob(fallbackDataUrl) : null;
+          resolve({ blob: recoveredBlob, dataUrl: fallbackDataUrl });
+        });
+      }
+
+      // Abre el modal de vista previa con la imagen generada y acciones de descarga/WhatsApp
+      function openImagePreviewModal(dataUrl, filename, shareText) {
+        const modal = document.getElementById('imagePreviewModal');
+        const img = document.getElementById('previewGeneratedImg');
+        const dlBtn = document.getElementById('previewDownloadBtn');
+        const tabBtn = document.getElementById('previewNewTabBtn');
+        const waBtn = document.getElementById('previewWhatsappTextBtn');
+
+        img.src = dataUrl;
+        img.alt = filename;
+
+        dlBtn.href = dataUrl;
+        dlBtn.download = filename;
+
+        tabBtn.href = dataUrl;
+
+        waBtn.onclick = () => {
+          const encoded = encodeURIComponent(shareText || 'WATA Finals');
+          window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank', 'noopener,noreferrer');
+        };
+
+        modal.classList.add('show');
+      }
+
+      // Dispara descarga directa si el entorno lo permite sin lanzar excepciones
+      function triggerSafeDownload(href, filename) {
+        try {
+          const a = document.createElement('a');
+          a.href = href;
+          a.download = filename;
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        } catch (_) {}
+      }
+
+      async function shareOrDownloadCanvas(canvas, filename, shareTitle, shareText) {
+        try {
+          const { blob, dataUrl } = await extractCanvasPng(canvas);
+          if (!blob && !dataUrl) {
+            showToast('⚠️ No se pudo generar la imagen PNG.');
+            return;
+          }
+
+          const effectiveBlob = blob || dataUrlToBlob(dataUrl);
+          const previewUrl = dataUrl || (effectiveBlob ? URL.createObjectURL(effectiveBlob) : '');
+
+          // 1. Intento nativo de compartir archivo (móviles / navegadores compatibles)
+          if (effectiveBlob && typeof File !== 'undefined' && navigator.share) {
+            try {
+              const file = new File([effectiveBlob], filename, { type: 'image/png' });
+              const canShareFiles = typeof navigator.canShare === 'function'
+                ? navigator.canShare({ files: [file] })
+                : true;
+
+              if (canShareFiles) {
+                await navigator.share({
+                  files: [file],
+                  title: shareTitle,
+                  text: shareText
+                });
+                showToast('✅ Imagen compartida correctamente.');
+                return;
+              }
+            } catch (err) {
+              // Si el usuario canceló el menú nativo, no mostrar error ni forzar modal
+              if (err && err.name === 'AbortError') {
+                return;
               }
             }
+          }
 
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(() => URL.revokeObjectURL(url), 5000);
-
-            showToast('📸 Placa descargada. Adjúntala en tu grupo de WhatsApp.');
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`, '_blank', 'noopener,noreferrer');
-            resolve();
-          }, 'image/png');
-        });
+          // 2. Respaldo universal: intentar descarga y abrir siempre la vista previa PNG
+          if (previewUrl) {
+            triggerSafeDownload(previewUrl, filename);
+            openImagePreviewModal(previewUrl, filename, shareText);
+            showToast('📸 Imagen generada: lista en vista previa y descarga.');
+          }
+        } catch (_) {
+          showToast('⚠️ Ocurrió un problema al preparar la imagen.');
+        }
       }
 
       async function generateOfficialFinalsPng() {
@@ -2023,6 +2189,17 @@
           renderAll();
           modal.classList.remove('show');
           showToast('↺ Lista original restaurada.');
+        });
+
+        // Modal Vista Previa de Imagen PNG
+        const previewModal = document.getElementById('imagePreviewModal');
+        document.getElementById('btnClosePreviewModal').addEventListener('click', () => {
+          previewModal.classList.remove('show');
+        });
+        previewModal.addEventListener('click', (e) => {
+          if (e.target === previewModal) {
+            previewModal.classList.remove('show');
+          }
         });
 
         // Botones WhatsApp y Simulador
