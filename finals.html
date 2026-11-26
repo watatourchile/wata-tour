@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🚨 WATA Finals — Convocatoria &amp; Cuadro Oficial</title>
+
+  <!-- Apariencia App Nativa (iOS y Android) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="WATA Finals">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#060913">
+
+  <style>
+    /* =========================================================================
+       RESET Y VARIABLES DE DISEÑO DEPORTIVO OSCURO (100% PURO SIN CDNs)
+       ========================================================================= */
+    :root {
+      --bg-main: #060913;
+      --bg-card: #0f172a;
+      --bg-card-alt: #131c31;
+      --bg-input: #090e1c;
+      --border-subtle: rgba(148, 163, 184, 0.16);
+      --border-emerald: rgba(16, 185, 129, 0.35);
+      --border-gold: rgba(251, 191, 36, 0.35);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --emerald: #10b981;
+      --emerald-light: #34d399;
+      --emerald-bg: rgba(16, 185, 129, 0.14);
+      --gold: #fbbf24;
+      --gold-bg: rgba(251, 191, 36, 0.15);
+      --rose: #f43f5e;
+      --rose-bg: rgba(244, 63, 94, 0.14);
+      --whatsapp: #25D366;
+      --whatsapp-dark: #1ebe5d;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.45;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input {
+      font-family: inherit;
+    }
+
+    /* =========================================================================
+       CABECERA PRINCIPAL
+       ========================================================================= */
+    .app-header {
+      background: linear-gradient(135deg, #060913 0%, #052e22 50%, #0b1326 100%);
+      border-bottom: 1px solid var(--border-emerald);
+      padding: 18px 16px 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .container {
+      max-width: 1120px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .header-top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: var(--radius-md);
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 700;
+      transition: background 0.18s, border-color 0.18s;
+    }
+
+    .btn-back:hover {
+      background: #1e293b;
+      border-color: var(--emerald);
+    }
+
+    .sync-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid var(--border-subtle);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .sync-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 1.8s infinite ease-in-out;
+    }
+
+    .sync-dot.ok {
+      background: var(--emerald);
+      animation: none;
+    }
+
+    .sync-dot.offline {
+      background: var(--text-muted);
+      animation: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.82); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: var(--gold-bg);
+      border: 1px solid var(--border-gold);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: clamp(24px, 5vw, 34px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      line-height: 1.15;
+    }
+
+    .hero-title span {
+      color: var(--emerald-light);
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+    }
+
+    /* =========================================================================
+       CONTENIDO Y TARJETAS
+       ========================================================================= */
+    .main-content {
+      flex: 1;
+      padding: 20px 16px 44px;
+    }
+
+    .stack-lg {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    }
+
+    /* =========================================================================
+       BARRA DE ACCIONES WHATSAPP Y DATOS DEL EVENTO
+       ========================================================================= */
+    .event-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 16px;
+    }
+
+    .section-heading {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.18s, background 0.18s;
+      white-space: nowrap;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-whatsapp {
+      background: var(--whatsapp);
+      color: #04130a;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+    }
+
+    .btn-whatsapp:hover {
+      background: var(--whatsapp-dark);
+    }
+
+    .btn-emerald {
+      background: var(--emerald);
+      color: #04130a;
+    }
+
+    .btn-emerald:hover {
+      background: var(--emerald-light);
+    }
+
+    .btn-dark {
+      background: #1e293b;
+      color: #f8fafc;
+      border-color: var(--border-subtle);
+    }
+
+    .btn-dark:hover {
+      background: #273549;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border-color: var(--border-subtle);
+      font-size: 12px;
+      padding: 8px 12px;
+    }
+
+    .btn-ghost:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .event-fields-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .event-fields-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field-box label {
+      display: block;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .input-control {
+      width: 100%;
+      padding: 10px 13px;
+      border-radius: var(--radius-md);
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      transition: border-color 0.18s;
+    }
+
+    .input-control:focus {
+      outline: none;
+      border-color: var(--emerald);
+    }
+
+    /* =========================================================================
+       TARJETAS KPI
+       ========================================================================= */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 820px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 15px;
+    }
+
+    .kpi-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+    }
+
+    .kpi-value {
+      font-size: 22px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-top: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .kpi-value.emerald { color: var(--emerald-light); }
+    .kpi-value.gold { color: var(--gold); }
+
+    .kpi-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* =========================================================================
+       CONTROLES DE INSCRIPCIÓN Y VISTA
+       ========================================================================= */
+    .toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .add-form {
+      display: flex;
+      flex: 1;
+      min-width: 260px;
+      gap: 8px;
+    }
+
+    .segmented {
+      display: inline-flex;
+      background: var(--bg-input);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .seg-btn {
+      padding: 7px 12px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .seg-btn.active {
+      background: var(--emerald);
+      color: #04130a;
+    }
+
+    /* =========================================================================
+       LAYOUT 2 COLUMNAS: 16 TITULARES + LISTA ESPERA / BAJAS
+       ========================================================================= */
+    .roster-layout {
+      display: grid;
+      grid-template-columns: 1.65fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .roster-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 14px 16px;
+      background: #0b1120;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .panel-header.gold-tint {
+      background: linear-gradient(90deg, rgba(251, 191, 36, 0.14), rgba(15, 23, 42, 0.95));
+      border-bottom-color: var(--border-gold);
+    }
+
+    .panel-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+    }
+
+    .pill-count {
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--emerald-bg);
+      color: var(--emerald-light);
+      border: 1px solid var(--border-emerald);
+    }
+
+    .pill-count.gold {
+      background: var(--gold-bg);
+      color: var(--gold);
+      border-color: var(--border-gold);
+    }
+
+    .pill-count.muted {
+      background: rgba(100, 116, 139, 0.18);
+      color: var(--text-secondary);
+      border-color: var(--border-subtle);
+    }
+
+    .player-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .player-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.09);
+      transition: background 0.15s;
+    }
+
+    .player-row:last-child {
+      border-bottom: none;
+    }
+
+    .player-row:hover {
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .player-left {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .slot-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #1e293b;
+      color: var(--emerald-light);
+      font-size: 12px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .slot-badge.top-seed {
+      background: var(--gold-bg);
+      color: var(--gold);
+      border-color: var(--border-gold);
+    }
+
+    .player-meta {
+      min-width: 0;
+    }
+
+    .player-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .race-tag {
+      display: inline-block;
+      margin-top: 2px;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--emerald-bg);
+      color: var(--emerald-light);
+    }
+
+    .race-tag.guest {
+      background: rgba(148, 163, 184, 0.12);
+      color: var(--text-secondary);
+    }
+
+    .player-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-mini {
+      padding: 6px 9px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-input);
+      color: var(--text-secondary);
+      transition: all 0.15s;
+    }
+
+    .btn-mini.bbq-yes {
+      background: var(--gold-bg);
+      border-color: var(--border-gold);
+      color: var(--gold);
+    }
+
+    .btn-mini.withdraw {
+      background: var(--rose-bg);
+      border-color: rgba(244, 63, 94, 0.3);
+      color: #fda4af;
+    }
+
+    .btn-mini.withdraw:hover {
+      background: var(--rose);
+      color: #ffffff;
+    }
+
+    .btn-mini.promote {
+      background: var(--emerald-bg);
+      border-color: var(--border-emerald);
+      color: var(--emerald-light);
+    }
+
+    .btn-mini.promote:hover {
+      background: var(--emerald);
+      color: #04130a;
+    }
+
+    .side-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .empty-msg {
+      padding: 18px 14px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .withdrawn-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    /* =========================================================================
+       SIMULADOR DE GRUPOS Y LLAVES
+       ========================================================================= */
+    .sim-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 960px) {
+      .sim-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 540px) {
+      .sim-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sim-box {
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .sim-box-head {
+      padding: 9px 12px;
+      background: #131c31;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--emerald-light);
+      display: flex;
+      justify-content: space-between;
+      text-transform: uppercase;
+    }
+
+    .sim-box-body {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .sim-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 9px;
+      border-radius: 8px;
+      background: var(--bg-card);
+      font-size: 12px;
+    }
+
+    .sim-item strong {
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sim-seed {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* =========================================================================
+       MODAL CONFIRMACIÓN Y TOAST
+       ========================================================================= */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 16px;
+      left: 16px;
+      max-width: 420px;
+      margin-left: auto;
+      background: #0f172a;
+      border: 1px solid var(--emerald);
+      color: #ffffff;
+      padding: 13px 16px;
+      border-radius: 14px;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6);
+      font-size: 13px;
+      font-weight: 700;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toast.show {
+      display: flex;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 90;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      max-width: 400px;
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .app-footer {
+      text-align: center;
+      padding: 18px;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CABECERA -->
+  <header class="app-header">
+    <div class="container">
+      <div class="header-top-bar">
+        <a href="./index.html" class="btn-back">
+          <span>← Volver al Ranking</span>
+        </a>
+
+        <div class="sync-pill">
+          <span id="syncDot" class="sync-dot"></span>
+          <span id="syncText">Sincronizando Race 2026...</span>
+        </div>
+      </div>
+
+      <div class="hero-badge">🚨 Torneo Cierre de Temporada • Cuadro de 16</div>
+      <h1 class="hero-title">🚨🚨🚨 <span>WATA Finals</span> 🚨🚨🚨</h1>
+      <p class="hero-subtitle">
+        Gestión oficial de inscritos, ascenso automático desde lista de espera, sorteo de grupos y placas para WhatsApp.
+      </p>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+    <div class="container stack-lg">
+
+      <!-- TARJETA 1: DATOS EDITABLES + BOTONES WHATSAPP -->
+      <section class="card">
+        <div class="event-header-row">
+          <h2 class="section-heading">📋 Datos de Convocatoria</h2>
+
+          <div class="action-group">
+            <button id="btnResetOriginal" type="button" class="btn btn-ghost">
+              ↺ Restaurar lista
+            </button>
+            <button id="btnShareText" type="button" class="btn btn-dark">
+              📋 Copiar Lista WhatsApp
+            </button>
+            <button id="btnShareImage" type="button" class="btn btn-whatsapp">
+              📸 Placa Oficial WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <div class="event-fields-grid">
+          <div class="field-box">
+            <label for="inputDate">📅 Fecha tentativa</label>
+            <input id="inputDate" type="text" class="input-control" value="19/12">
+          </div>
+          <div class="field-box">
+            <label for="inputVenue">📍 Lugar / Recinto</label>
+            <input id="inputVenue" type="text" class="input-control" value="Caja 18">
+          </div>
+          <div class="field-box">
+            <label for="inputNote">🍗 Tercer Tiempo / Nota</label>
+            <input id="inputNote" type="text" class="input-control" value="Con asadito 🍗 (?)">
+          </div>
+        </div>
+      </section>
+
+      <!-- TARJETA 2: INDICADORES KPI -->
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label"><span>Titulares</span><span>🎾</span></div>
+          <div id="kpiStarters" class="kpi-value emerald">16 / 16</div>
+          <div id="kpiStartersSub" class="kpi-sub">Cuadro completo</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label"><span>Lista de Espera</span><span>⏳</span></div>
+          <div id="kpiWaitlist" class="kpi-value gold">1</div>
+          <div id="kpiWaitlistSub" class="kpi-sub">Próximo: @~COD</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label"><span>Asadito 🍗</span><span>🔥</span></div>
+          <div id="kpiBbq" class="kpi-value">0 / 16</div>
+          <div class="kpi-sub">Confirmados tercer tiempo</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label"><span>Sembrado #1</span><span>👑</span></div>
+          <div id="kpiTopSeed" class="kpi-value">—</div>
+          <div id="kpiTopSeedSub" class="kpi-sub">Según Race 2026</div>
+        </div>
+      </section>
+
+      <!-- TARJETA 3: AGREGAR PARTICIPANTE Y MODO DE VISTA -->
+      <section class="card">
+        <div class="toolbar-row">
+          <form id="formAddPlayer" class="add-form">
+            <input id="inputNewPlayer" list="racePlayersList" type="text" class="input-control" placeholder="Agregar jugador o invitado..." required>
+            <datalist id="racePlayersList"></datalist>
+            <button type="submit" class="btn btn-emerald">+ Inscribir</button>
+          </form>
+
+          <div class="segmented" role="group" aria-label="Orden de visualización">
+            <button type="button" data-view="order" class="seg-btn active">Orden Inscripción</button>
+            <button type="button" data-view="seeds" class="seg-btn">Siembra Race 2026</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TARJETA 4: CUADRO DE 16 TITULARES + LISTA DE ESPERA Y BAJAS -->
+      <section class="roster-layout">
+        <!-- Columna Izquierda: 16 Titulares -->
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">🏆 Cuadro Oficial Titular (16 Cupos)</span>
+            <span id="badgeStarters" class="pill-count">16 / 16</span>
+          </div>
+          <div id="startersContainer" class="player-list"></div>
+        </div>
+
+        <!-- Columna Derecha: Lista de Espera y Bajas -->
+        <div class="side-stack">
+          <div class="panel">
+            <div class="panel-header gold-tint">
+              <span class="panel-title">⏳ Lista de Espera</span>
+              <span id="badgeWaitlist" class="pill-count gold">1</span>
+            </div>
+            <div id="waitlistContainer" class="player-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">🚑 Bajas / Retirados</span>
+              <span id="badgeWithdrawn" class="pill-count muted">0</span>
+            </div>
+            <div id="withdrawnContainer" class="player-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TARJETA 5: SIMULADOR DE GRUPOS Y LLAVES -->
+      <section class="card">
+        <div class="event-header-row" style="margin-bottom: 0; border-bottom: none; padding-bottom: 0;">
+          <div>
+            <h2 class="section-heading">🎯 Simulador de Grupos / Octavos</h2>
+            <p class="kpi-sub" style="margin-top: 4px;">
+              Arma 4 grupos de 4 equilibrados por bombos Race 2026 o cruces directos de Octavos (1 vs 16).
+            </p>
+          </div>
+
+          <div class="action-group">
+            <button id="btnSimGroups" type="button" class="btn btn-emerald">
+              🎲 Sortear 4 Grupos
+            </button>
+            <button id="btnSimBracket" type="button" class="btn btn-dark">
+              🏆 Cuadro Octavos
+            </button>
+            <button id="btnShareSimImg" type="button" class="btn btn-whatsapp hidden">
+              📸 Foto Sorteo WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <div id="simContainer" class="hidden"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    WATA Tour • Gestión Oficial WATA Finals • Sincronizado en segundo plano con Race 2026.
+  </footer>
+
+  <!-- MODAL CONFIRMACIÓN RESTAURAR -->
+  <div id="confirmModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-title">↺ Restaurar convocatoria original</div>
+      <div class="modal-desc">
+        Se volverá a cargar la lista original de los 16 inscritos, @~COD en lista de espera y se limpiarán las bajas registradas.
+      </div>
+      <div class="modal-actions">
+        <button id="btnCancelReset" type="button" class="btn btn-dark">Cancelar</button>
+        <button id="btnConfirmReset" type="button" class="btn btn-emerald">Sí, restaurar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICACIÓN -->
+  <div id="toast" class="toast">
+    <span>✅</span>
+    <span id="toastMsg">Listo</span>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // =========================================================================
+      // 1. CONFIGURACIÓN Y ESTADO INICIAL
+      // =========================================================================
+      const RACE_2026_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZ3r7pG_LCx26Frlcu39Wy32QVep--XZgklehHPOC_tzqBa5PXIqILMssatwd9IJTxS_s9Hn5dXx2P/pub?gid=1816711531&single=true&output=csv';
+      const RACE_CACHE_KEY = 'wata_finals_race2026_cache_v1';
+      const STORAGE_KEY = 'wata_finals_2026_v1';
+
+      const DEFAULT_DATA = {
+        date: '19/12',
+        venue: 'Caja 18',
+        note: 'Con asadito 🍗 (?)',
+        starters: [
+          { name: 'Manuel Paillape', bbq: false },
+          { name: 'Marco Acuña', bbq: false },
+          { name: 'Mauro Barredo', bbq: false },
+          { name: 'Albert Cerda', bbq: false },
+          { name: 'Rodrigo Soto', bbq: false },
+          { name: 'Hugo Romero', bbq: false },
+          { name: 'Gabriel Cortes', bbq: false },
+          { name: 'Seba MacPherson', bbq: false },
+          { name: 'Gabriel Martínez', bbq: false },
+          { name: 'Manuel Cerda', bbq: false },
+          { name: 'Lucas Anriquez', bbq: false },
+          { name: 'Pablo Rotger', bbq: false },
+          { name: 'Rodrigo Aravena', bbq: false },
+          { name: 'DVS', bbq: false },
+          { name: 'Simon', bbq: false },
+          { name: 'Nibaldo Paillape', bbq: false }
+        ],
+        waitlist: [
+          { name: '@~COD', bbq: false }
+        ],
+        withdrawn: []
+      };
+
+      const RACE_ALIASES = {
+        'albert cerda': 'alberto cerda',
+        'mauro barredo': 'mauricio barredo',
+        'seba macpherson': 'sebastian macpherson',
+        'simon': 'simon olivares',
+        'rodigo soto': 'rodrigo soto',
+        'maro acuna': 'marco acuna'
+      };
+
+      function normKey(str) {
+        if (!str) return '';
+        const base = String(str)
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/\s+/g, ' ')
+          .trim();
+        return RACE_ALIASES[base] || base;
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && Array.isArray(parsed.starters)) {
+              return {
+                date: parsed.date !== undefined ? parsed.date : DEFAULT_DATA.date,
+                venue: parsed.venue !== undefined ? parsed.venue : DEFAULT_DATA.venue,
+                note: parsed.note !== undefined ? parsed.note : DEFAULT_DATA.note,
+                starters: parsed.starters,
+                waitlist: Array.isArray(parsed.waitlist) ? parsed.waitlist : [],
+                withdrawn: Array.isArray(parsed.withdrawn) ? parsed.withdrawn : []
+              };
+            }
+          }
+        } catch (_) {}
+        return JSON.parse(JSON.stringify(DEFAULT_DATA));
+      }
+
+      const app = {
+        data: loadState(),
+        racePlayers: [],
+        viewMode: 'order', // 'order' | 'seeds'
+        simMode: null,     // 'groups' | 'bracket' | null
+        drawnGroups: null
+      };
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(app.data));
+        } catch (_) {}
+      }
+
+      function showToast(msg) {
+        const el = document.getElementById('toast');
+        document.getElementById('toastMsg').textContent = msg;
+        el.classList.add('show');
+        clearTimeout(window.__toastTimer);
+        window.__toastTimer = setTimeout(() => el.classList.remove('show'), 3800);
+      }
+
+      function formatPts(num) {
+        return Number(num || 0).toLocaleString('es-CL');
+      }
+
+      // =========================================================================
+      // 2. LECTURA SILENCIOSA EN SEGUNDO PLANO DE RACE 2026 (NO BLOQUEANTE)
+      // =========================================================================
+      function parsePoints(val) {
+        if (val === null || val === undefined) return 0;
+        const cleaned = String(val).replace(/\./g, '').replace(/,/g, '.').replace(/[^\d.-]/g, '');
+        const n = parseFloat(cleaned);
+        return Number.isFinite(n) ? Math.round(n) : 0;
+      }
+
+      function parseRaceCsv(csvText) {
+        const lines = csvText.replace(/^\uFEFF/, '').split(/\r?\n/).filter(l => l.trim() !== '');
+        const rows = lines.map(line => {
+          const out = [];
+          let cur = '';
+          let inQ = false;
+          for (let i = 0; i < line.length; i++) {
+            const ch = line[i];
+            if (ch === '"') {
+              inQ = !inQ;
+            } else if (ch === ',' && !inQ) {
+              out.push(cur.trim());
+              cur = '';
+            } else {
+              cur += ch;
+            }
+          }
+          out.push(cur.trim());
+          return out;
+        });
+
+        let headerIdx = -1;
+        let playerCol = 1;
+        for (let i = 0; i < rows.length; i++) {
+          const idx = rows[i].findIndex(c => c.toUpperCase() === 'JUGADOR');
+          if (idx !== -1) {
+            headerIdx = i;
+            playerCol = idx;
+            break;
+          }
+        }
+        if (headerIdx === -1) return [];
+
+        const headers = rows[headerIdx].map(h => h.toUpperCase());
+        const amistCol = headers.findIndex(h => h.includes('AMISTOSO')) !== -1
+          ? headers.findIndex(h => h.includes('AMISTOSO'))
+          : playerCol + 1;
+
+        const tornCols = [];
+        for (let c = amistCol + 1; c < headers.length; c++) {
+          if (headers[c].includes('TORNEO')) tornCols.push(c);
+        }
+        const totalCol = tornCols.length > 0 ? tornCols[tornCols.length - 1] + 1 : amistCol + 1;
+
+        const list = [];
+        for (let r = headerIdx + 1; r < rows.length; r++) {
+          const row = rows[r];
+          const rawName = row[playerCol];
+          if (!rawName || rawName.toUpperCase() === 'JUGADOR') continue;
+          const amist = parsePoints(row[amistCol]);
+          let torn = 0;
+          tornCols.forEach(c => { torn += parsePoints(row[c]); });
+          let total = (row[totalCol] !== undefined && row[totalCol] !== '') ? parsePoints(row[totalCol]) : (amist + torn);
+          if (total === 0 && (amist > 0 || torn > 0)) total = amist + torn;
+
+          list.push({
+            name: rawName,
+            key: normKey(rawName),
+            total
+          });
+        }
+
+        list.sort((a, b) => b.total - a.total);
+        let rank = 1;
+        list.forEach((p, idx) => {
+          if (idx > 0 && p.total < list[idx - 1].total) rank = idx + 1;
+          p.rank = rank;
+        });
+
+        return list;
+      }
+
+      async function syncRace2026Silently() {
+        const dot = document.getElementById('syncDot');
+        const txt = document.getElementById('syncText');
+
+        // Cargar caché previo inmediatamente si existe
+        try {
+          const cached = localStorage.getItem(RACE_CACHE_KEY);
+          if (cached) {
+            app.racePlayers = parseRaceCsv(cached);
+            renderAll();
+          }
+        } catch (_) {}
+
+        const attempts = [
+          `${RACE_2026_CSV_URL}&_t=${Date.now()}`,
+          `https://corsproxy.io/?${encodeURIComponent(RACE_2026_CSV_URL)}`,
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(RACE_2026_CSV_URL)}`
+        ];
+
+        for (const url of attempts) {
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 7000);
+          try {
+            const res = await fetch(url, { signal: controller.signal });
+            clearTimeout(timer);
+            if (!res.ok) continue;
+            const csv = await res.text();
+            if (!csv || csv.trim().startsWith('<')) continue;
+            const parsed = parseRaceCsv(csv);
+            if (parsed.length > 0) {
+              app.racePlayers = parsed;
+              try { localStorage.setItem(RACE_CACHE_KEY, csv); } catch (_) {}
+              dot.className = 'sync-dot ok';
+              txt.textContent = `Race 2026 en vivo (${parsed.length} jug.)`;
+              renderAll();
+              return;
+            }
+          } catch (_) {
+            clearTimeout(timer);
+          }
+        }
+
+        dot.className = app.racePlayers.length > 0 ? 'sync-dot ok' : 'sync-dot offline';
+        txt.textContent = app.racePlayers.length > 0
+          ? 'Race 2026 (caché local)'
+          : 'Modo local (sin red Sheets)';
+      }
+
+      function getRaceInfo(playerName) {
+        const key = normKey(playerName);
+        const found = app.racePlayers.find(p => p.key === key);
+        if (found) {
+          return { found: true, rank: found.rank, total: found.total };
+        }
+        return { found: false, rank: 999, total: 0 };
+      }
+
+      function getSeededStarters() {
+        return app.data.starters
+          .map((item, idx) => {
+            const info = getRaceInfo(item.name);
+            return {
+              ...item,
+              originalIdx: idx,
+              rank: info.rank,
+              total: info.total,
+              inRace: info.found
+            };
+          })
+          .sort((a, b) => a.rank - b.rank || b.total - a.total || a.originalIdx - b.originalIdx)
+          .map((item, seedIdx) => ({
+            ...item,
+            seed: seedIdx + 1
+          }));
+      }
+
+      // =========================================================================
+      // 3. RENDERIZADO DE LA INTERFAZ
+      // =========================================================================
+      function renderAll() {
+        const d = app.data;
+
+        const inpDate = document.getElementById('inputDate');
+        const inpVenue = document.getElementById('inputVenue');
+        const inpNote = document.getElementById('inputNote');
+        if (document.activeElement !== inpDate) inpDate.value = d.date;
+        if (document.activeElement !== inpVenue) inpVenue.value = d.venue;
+        if (document.activeElement !== inpNote) inpNote.value = d.note;
+
+        // Datalist
+        const dl = document.getElementById('racePlayersList');
+        dl.innerHTML = app.racePlayers.map(p => `<option value="${p.name}"></option>`).join('');
+
+        // KPIs
+        const startersCount = d.starters.length;
+        const waitlistCount = d.waitlist.length;
+        const bbqCount = d.starters.filter(s => s.bbq).length;
+        const seeded = getSeededStarters();
+
+        document.getElementById('kpiStarters').textContent = `${startersCount} / 16`;
+        document.getElementById('kpiStartersSub').textContent = startersCount >= 16
+          ? 'Cuadro completo'
+          : `${16 - startersCount} cupo(s) libre(s)`;
+
+        document.getElementById('kpiWaitlist').textContent = String(waitlistCount);
+        document.getElementById('kpiWaitlistSub').textContent = waitlistCount > 0
+          ? `Próximo: ${d.waitlist[0].name}`
+          : 'Sin jugadores en espera';
+
+        document.getElementById('kpiBbq').textContent = `${bbqCount} / ${startersCount}`;
+
+        if (seeded.length > 0 && seeded[0].inRace) {
+          document.getElementById('kpiTopSeed').textContent = seeded[0].name;
+          document.getElementById('kpiTopSeedSub').textContent = `#${seeded[0].rank} Race (${formatPts(seeded[0].total)} pts)`;
+        } else {
+          document.getElementById('kpiTopSeed').textContent = seeded[0] ? seeded[0].name : '—';
+          document.getElementById('kpiTopSeedSub').textContent = 'Según Race 2026';
+        }
+
+        document.getElementById('badgeStarters').textContent = `${startersCount} / 16`;
+        document.getElementById('badgeWaitlist').textContent = String(waitlistCount);
+        document.getElementById('badgeWithdrawn').textContent = String(d.withdrawn.length);
+
+        // Botones vista
+        document.querySelectorAll('.seg-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-view') === app.viewMode);
+        });
+
+        // Render 16 Titulares
+        const startersEl = document.getElementById('startersContainer');
+        const itemsToRender = app.viewMode === 'seeds'
+          ? seeded
+          : d.starters.map((item, idx) => {
+              const info = getRaceInfo(item.name);
+              return { ...item, originalIdx: idx, rank: info.rank, total: info.total, inRace: info.found };
+            });
+
+        if (itemsToRender.length === 0) {
+          startersEl.innerHTML = `<div class="empty-msg">No hay jugadores titulares inscritos.</div>`;
+        } else {
+          startersEl.innerHTML = itemsToRender.map(p => {
+            const num = app.viewMode === 'seeds' ? p.seed : (p.originalIdx + 1);
+            const isTop4 = app.viewMode === 'seeds' && p.seed <= 4;
+            const raceBadge = p.inRace
+              ? `<span class="race-tag">#${p.rank} Race • ${formatPts(p.total)} pts</span>`
+              : `<span class="race-tag guest">Invitado / Sin pts '26</span>`;
+
+            return `
+              <div class="player-row">
+                <div class="player-left">
+                  <div class="slot-badge ${isTop4 ? 'top-seed' : ''}">${num}</div>
+                  <div class="player-meta">
+                    <div class="player-name">${escapeHtml(p.name)}</div>
+                    ${raceBadge}
+                  </div>
+                </div>
+
+                <div class="player-actions">
+                  <button type="button" data-action="toggle-bbq" data-idx="${p.originalIdx}" class="btn-mini ${p.bbq ? 'bbq-yes' : ''}" title="Confirmar asadito">
+                    🍗 ${p.bbq ? 'Va' : '?'}
+                  </button>
+                  <button type="button" data-action="withdraw" data-idx="${p.originalIdx}" class="btn-mini withdraw" title="Dar de baja">
+                    Dar de baja
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+
+        // Render Lista de Espera
+        const waitEl = document.getElementById('waitlistContainer');
+        if (d.waitlist.length === 0) {
+          waitEl.innerHTML = `<div class="empty-msg">Sin jugadores en lista de espera.</div>`;
+        } else {
+          const canPromote = d.starters.length < 16;
+          waitEl.innerHTML = d.waitlist.map((w, idx) => {
+            const info = getRaceInfo(w.name);
+            return `
+              <div class="player-row">
+                <div class="player-left">
+                  <div class="slot-badge top-seed">#${idx + 1}</div>
+                  <div class="player-meta">
+                    <div class="player-name">${escapeHtml(w.name)}</div>
+                    <span class="race-tag ${info.found ? '' : 'guest'}">
+                      ${info.found ? `#${info.rank} Race (${formatPts(info.total)} pts)` : 'En espera de cupo'}
+                    </span>
+                  </div>
+                </div>
+                <div class="player-actions">
+                  ${canPromote ? `<button type="button" data-action="promote" data-idx="${idx}" class="btn-mini promote">↑ Subir</button>` : ''}
+                  <button type="button" data-action="remove-wait" data-idx="${idx}" class="btn-mini" title="Quitar">✕</button>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+
+        // Render Bajas
+        const withEl = document.getElementById('withdrawnContainer');
+        if (d.withdrawn.length === 0) {
+          withEl.innerHTML = `<div class="empty-msg">Sin bajas registradas.</div>`;
+        } else {
+          withEl.innerHTML = d.withdrawn.map((b, idx) => `
+            <div class="player-row">
+              <span class="withdrawn-name">${escapeHtml(b.name)}</span>
+              <button type="button" data-action="reintegrate" data-idx="${idx}" class="btn-mini promote">
+                ↩ Reintegrar
+              </button>
+            </div>
+          `).join('');
+        }
+
+        if (app.simMode) renderSimulation();
+      }
+
+      function escapeHtml(str) {
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      // =========================================================================
+      // 4. ACCIONES DE INSCRIPCIÓN, BAJAS Y ASCENSO AUTOMÁTICO
+      // =========================================================================
+      function addParticipant(rawName) {
+        const name = String(rawName || '').trim().replace(/\s+/g, ' ');
+        if (!name) return;
+
+        const key = normKey(name);
+        const dupStarter = app.data.starters.some(s => normKey(s.name) === key);
+        const dupWait = app.data.waitlist.some(w => normKey(w.name) === key);
+
+        if (dupStarter || dupWait) {
+          showToast(`⚠️ ${name} ya figura en la lista.`);
+          return;
+        }
+
+        app.data.withdrawn = app.data.withdrawn.filter(b => normKey(b.name) !== key);
+
+        if (app.data.starters.length < 16) {
+          app.data.starters.push({ name, bbq: false });
+          showToast(`✅ ${name} inscrito en cupo #${app.data.starters.length}.`);
+        } else {
+          app.data.waitlist.push({ name, bbq: false });
+          showToast(`⏳ Cuadro lleno (16/16). ${name} pasó a Lista de Espera #${app.data.waitlist.length}.`);
+        }
+
+        app.drawnGroups = null;
+        saveState();
+        renderAll();
+      }
+
+      function withdrawStarter(idx) {
+        const person = app.data.starters[idx];
+        if (!person) return;
+
+        app.data.starters.splice(idx, 1);
+        app.data.withdrawn.unshift({ name: person.name, bbq: person.bbq });
+
+        if (app.data.waitlist.length > 0 && app.data.starters.length < 16) {
+          const promoted = app.data.waitlist.shift();
+          app.data.starters.push(promoted);
+          showToast(`🚨 Baja de ${person.name}. Sube automático ${promoted.name} al cuadro titular.`);
+        } else {
+          showToast(`🚨 ${person.name} dado de baja (${app.data.starters.length}/16 cupos).`);
+        }
+
+        app.drawnGroups = null;
+        saveState();
+        renderAll();
+      }
+
+      // =========================================================================
+      // 5. SIMULADOR DE 4 GRUPOS DE 4 Y OCTAVOS DE FINAL
+      // =========================================================================
+      function drawGroupsByPots() {
+        const seeded = getSeededStarters();
+        if (seeded.length < 4) {
+          showToast('⚠️ Se requieren al menos 4 titulares para sortear grupos.');
+          return;
+        }
+
+        const pots = [
+          seeded.slice(0, 4),
+          seeded.slice(4, 8),
+          seeded.slice(8, 12),
+          seeded.slice(12, 16)
+        ];
+
+        pots.forEach(pot => {
+          for (let i = pot.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pot[i], pot[j]] = [pot[j], pot[i]];
+          }
+        });
+
+        const names = ['Grupo A', 'Grupo B', 'Grupo C', 'Grupo D'];
+        app.drawnGroups = names.map((gName, gIdx) => ({
+          name: gName,
+          players: pots.map(pot => pot[gIdx]).filter(Boolean)
+        }));
+        app.simMode = 'groups';
+        renderSimulation();
+      }
+
+      function renderSimulation() {
+        const container = document.getElementById('simContainer');
+        const shareSimBtn = document.getElementById('btnShareSimImg');
+        container.classList.remove('hidden');
+        shareSimBtn.classList.remove('hidden');
+
+        if (app.simMode === 'groups' && app.drawnGroups) {
+          container.innerHTML = `
+            <div class="sim-grid">
+              ${app.drawnGroups.map(g => `
+                <div class="sim-box">
+                  <div class="sim-box-head">
+                    <span>${g.name}</span>
+                    <span style="color: var(--text-secondary); font-size: 10px;">Round Robin</span>
+                  </div>
+                  <div class="sim-box-body">
+                    ${g.players.map((p, idx) => `
+                      <div class="sim-item">
+                        <strong>${escapeHtml(p.name)}</strong>
+                        <span class="sim-seed">B${idx + 1} • #${p.seed}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        } else if (app.simMode === 'bracket') {
+          const seeded = getSeededStarters();
+          const pairs = [
+            [0, 15], [7, 8], [4, 11], [3, 12],
+            [2, 13], [5, 10], [6, 9], [1, 14]
+          ];
+
+          container.innerHTML = `
+            <div class="sim-grid">
+              ${pairs.map(([a, b], idx) => {
+                const p1 = seeded[a];
+                const p2 = seeded[b];
+                return `
+                  <div class="sim-box">
+                    <div class="sim-box-head">
+                      <span>Octavos #${idx + 1}</span>
+                      <span style="color: var(--gold);">S${a + 1} vs S${b + 1}</span>
+                    </div>
+                    <div class="sim-box-body">
+                      <div class="sim-item">
+                        <strong>${p1 ? escapeHtml(p1.name) : 'BYE'}</strong>
+                        <span class="sim-seed">#${a + 1}</span>
+                      </div>
+                      <div class="sim-item">
+                        <strong>${p2 ? escapeHtml(p2.name) : 'BYE'}</strong>
+                        <span class="sim-seed">#${b + 1}</span>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          `;
+        }
+      }
+
+      // =========================================================================
+      // 6. EXPORTACIÓN A WHATSAPP (TEXTO FORMATEADO + PLACAS PNG CANVAS)
+      // =========================================================================
+      function buildWhatsAppText() {
+        const d = app.data;
+        const lines = [
+          '🚨🚨🚨 WATA Finals 🚨🚨🚨',
+          `Fecha tentativa: ${d.date}`,
+          `Lugar : ${d.venue}`,
+          d.note,
+          ''
+        ];
+
+        d.starters.forEach((s, i) => {
+          lines.push(`${i + 1}. ${s.name}${s.bbq ? ' 🍗' : ''}`);
+        });
+
+        lines.push('');
+        lines.push('Lista de espera:');
+        if (d.waitlist.length === 0) {
+          lines.push('1.');
+        } else {
+          d.waitlist.forEach((w, i) => {
+            lines.push(`${i + 1}. ${w.name}`);
+          });
+        }
+
+        return lines.join('\n');
+      }
+
+      async function shareWhatsAppText() {
+        const text = buildWhatsAppText();
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          showToast('📋 Lista copiada. Abriendo WhatsApp...');
+        } catch (_) {
+          showToast('📲 Abriendo WhatsApp...');
+        }
+
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+      }
+
+      function drawRoundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+      }
+
+      async function shareOrDownloadCanvas(canvas, filename, shareTitle, shareText) {
+        return new Promise((resolve) => {
+          canvas.toBlob(async (blob) => {
+            if (!blob) {
+              showToast('No se pudo generar la imagen.');
+              resolve();
+              return;
+            }
+
+            const file = new File([blob], filename, { type: 'image/png' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+              try {
+                await navigator.share({ files: [file], title: shareTitle, text: shareText });
+                resolve();
+                return;
+              } catch (err) {
+                if (err && err.name === 'AbortError') {
+                  resolve();
+                  return;
+                }
+              }
+            }
+
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+            showToast('📸 Placa descargada. Adjúntala en tu grupo de WhatsApp.');
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`, '_blank', 'noopener,noreferrer');
+            resolve();
+          }, 'image/png');
+        });
+      }
+
+      async function generateOfficialFinalsPng() {
+        const d = app.data;
+        const starters = d.starters;
+        const waitlist = d.waitlist;
+
+        const width = 1080;
+        const rowsPerCol = Math.max(Math.ceil(starters.length / 2), 1);
+        const gridH = rowsPerCol * 74;
+        const waitH = waitlist.length > 0 ? (82 + waitlist.length * 42) : 82;
+        const height = 370 + gridH + waitH + 84;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+
+        // Fondo oscuro deportivo
+        ctx.fillStyle = '#060913';
+        ctx.fillRect(0, 0, width, height);
+
+        // Header degradado
+        const hGrad = ctx.createLinearGradient(0, 0, width, 195);
+        hGrad.addColorStop(0, '#060913');
+        hGrad.addColorStop(0.5, '#052e22');
+        hGrad.addColorStop(1, '#0b1326');
+        ctx.fillStyle = hGrad;
+        ctx.fillRect(0, 0, width, 195);
+
+        ctx.fillStyle = '#10b981';
+        ctx.fillRect(0, 0, width, 8);
+
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = '800 18px sans-serif';
+        ctx.fillText('🚨 TORNEO CIERRE DE TEMPORADA • CIRCUITO WATA TOUR', 56, 56);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 48px sans-serif';
+        ctx.fillText('🚨🚨🚨 WATA FINALS 🚨🚨🚨', 56, 118);
+
+        ctx.fillStyle = '#34d399';
+        ctx.font = '700 22px sans-serif';
+        ctx.fillText(`Convocatoria Oficial • ${starters.length}/16 Cupos Confirmados`, 56, 162);
+
+        // Caja Datos Evento
+        const infoY = 212;
+        ctx.fillStyle = '#0f172a';
+        roundRect(ctx, 56, infoY, width - 112, 102, 18);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(16, 185, 129, 0.4)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '800 14px sans-serif';
+        ctx.fillText('📅 FECHA TENTATIVA', 86, infoY + 34);
+        ctx.fillText('📍 LUGAR / RECINTO', 400, infoY + 34);
+        ctx.fillText('🍗 TERCER TIEMPO', 725, infoY + 34);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 24px sans-serif';
+        ctx.fillText(d.date || 'Por definir', 86, infoY + 72);
+        ctx.fillText((d.venue || 'Por definir').slice(0, 18), 400, infoY + 72);
+        ctx.fillText((d.note || '—').slice(0, 20), 725, infoY + 72);
+
+        // Cuadro de 16 en 2 columnas
+        const listY = 348;
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 19px sans-serif';
+        ctx.fillText(`CUADRO TITULAR (${starters.length}/16)`, 56, listY);
+
+        const colW = 474;
+        starters.forEach((s, idx) => {
+          const col = idx < 8 ? 0 : 1;
+          const row = idx < 8 ? idx : (idx - 8);
+          const x = 56 + col * (colW + 20);
+          const y = listY + 16 + row * 74;
+
+          ctx.fillStyle = '#0f172a';
+          roundRect(ctx, x, y, colW, 64, 14);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(148, 163, 184, 0.2)';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          ctx.fillStyle = '#1e293b';
+          roundRect(ctx, x + 12, y + 12, 40, 40, 10);
+          ctx.fill();
+
+          ctx.fillStyle = '#34d399';
+          ctx.font = '900 18px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(String(idx + 1), x + 32, y + 38);
+          ctx.textAlign = 'left';
+
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '800 20px sans-serif';
+          const label = `${s.name}${s.bbq ? ' 🍗' : ''}`;
+          const clipped = label.length > 22 ? label.slice(0, 21) + '…' : label;
+          ctx.fillText(clipped, x + 64, y + 39);
+
+          const info = getRaceInfo(s.name);
+          if (info.found) {
+            ctx.fillStyle = 'rgba(16, 185, 129, 0.16)';
+            roundRect(ctx, x + colW - 96, y + 16, 84, 32, 8);
+            ctx.fill();
+            ctx.fillStyle = '#34d399';
+            ctx.font = '800 14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`#${info.rank} Race`, x + colW - 54, y + 37);
+            ctx.textAlign = 'left';
+          }
+        });
+
+        // Lista de espera
+        const waitY = listY + 22 + gridH;
+        ctx.fillStyle = 'rgba(251, 191, 36, 0.1)';
+        roundRect(ctx, 56, waitY, width - 112, waitH - 12, 16);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(251, 191, 36, 0.35)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = '900 17px sans-serif';
+        ctx.fillText(`⏳ LISTA DE ESPERA (${waitlist.length})`, 80, waitY + 32);
+
+        if (waitlist.length === 0) {
+          ctx.fillStyle = '#94a3b8';
+          ctx.font = '600 16px sans-serif';
+          ctx.fillText('Sin jugadores en lista de espera actualmente.', 80, waitY + 60);
+        } else {
+          waitlist.forEach((w, i) => {
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '800 18px sans-serif';
+            ctx.fillText(`${i + 1}. ${w.name}`, 80, waitY + 62 + i * 38);
+          });
+        }
+
+        // Footer
+        ctx.fillStyle = '#0b1120';
+        ctx.fillRect(0, height - 60, width, 60);
+        ctx.fillStyle = '#64748b';
+        ctx.font = '600 16px sans-serif';
+        ctx.fillText('rodrigosotomaureira.github.io/wata-tour', 56, height - 24);
+        ctx.fillStyle = '#34d399';
+        ctx.font = '800 16px sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('WATA FINALS • CUADRO OFICIAL', width - 56, height - 24);
+        ctx.textAlign = 'left';
+
+        await shareOrDownloadCanvas(
+          canvas,
+          `WATA-Finals-${(d.date || '2026').replace(/[^\dA-Za-z]+/g, '-')}.png`,
+          'WATA Finals — Convocatoria Oficial',
+          buildWhatsAppText()
+        );
+      }
+
+      async function generateSimulationPng() {
+        if (!app.simMode) return;
+        const width = 1080;
+        const isGroups = app.simMode === 'groups' && app.drawnGroups;
+        const height = isGroups ? 780 : 940;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = '#060913';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#10b981';
+        ctx.fillRect(0, 0, width, 8);
+
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = '800 18px sans-serif';
+        ctx.fillText(`🚨 WATA FINALS • ${app.data.date} • ${app.data.venue}`, 56, 58);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 42px sans-serif';
+        ctx.fillText(isGroups ? '🎲 SORTEO OFICIAL DE GRUPOS' : '🏆 CUADRO OCTAVOS DE FINAL (1 vs 16)', 56, 114);
+
+        if (isGroups) {
+          const cardW = 474;
+          const cardH = 270;
+          app.drawnGroups.forEach((g, idx) => {
+            const col = idx % 2;
+            const row = Math.floor(idx / 2);
+            const x = 56 + col * (cardW + 20);
+            const y = 148 + row * (cardH + 20);
+
+            ctx.fillStyle = '#0f172a';
+            roundRect(ctx, x, y, cardW, cardH, 18);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.35)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = '#34d399';
+            ctx.font = '900 22px sans-serif';
+            ctx.fillText(g.name.toUpperCase(), x + 22, y + 38);
+
+            g.players.forEach((p, pIdx) => {
+              const py = y + 58 + pIdx * 48;
+              ctx.fillStyle = '#090e1c';
+              roundRect(ctx, x + 18, py, cardW - 36, 40, 10);
+              ctx.fill();
+
+              ctx.fillStyle = '#ffffff';
+              ctx.font = '800 18px sans-serif';
+              ctx.fillText(p.name.slice(0, 24), x + 32, py + 26);
+
+              ctx.fillStyle = '#fbbf24';
+              ctx.font = '800 15px sans-serif';
+              ctx.textAlign = 'right';
+              ctx.fillText(`Seed #${p.seed}`, x + cardW - 32, py + 26);
+              ctx.textAlign = 'left';
+            });
+          });
+        } else {
+          const seeded = getSeededStarters();
+          const pairs = [[0, 15], [7, 8], [4, 11], [3, 12], [2, 13], [5, 10], [6, 9], [1, 14]];
+          const cardW = 474;
+          const cardH = 165;
+
+          pairs.forEach(([a, b], idx) => {
+            const col = idx % 2;
+            const row = Math.floor(idx / 2);
+            const x = 56 + col * (cardW + 20);
+            const y = 148 + row * (cardH + 16);
+
+            ctx.fillStyle = '#0f172a';
+            roundRect(ctx, x, y, cardW, cardH, 16);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '800 14px sans-serif';
+            ctx.fillText(`LLAVE #${idx + 1}`, x + 20, y + 28);
+
+            const p1 = seeded[a];
+            const p2 = seeded[b];
+
+            [p1, p2].forEach((pl, pIdx) => {
+              const py = y + 42 + pIdx * 54;
+              const seedNum = pIdx === 0 ? (a + 1) : (b + 1);
+              ctx.fillStyle = '#090e1c';
+              roundRect(ctx, x + 16, py, cardW - 32, 44, 10);
+              ctx.fill();
+
+              ctx.fillStyle = '#ffffff';
+              ctx.font = '800 18px sans-serif';
+              ctx.fillText(pl ? pl.name.slice(0, 24) : 'BYE', x + 30, py + 28);
+
+              ctx.fillStyle = '#34d399';
+              ctx.font = '800 15px sans-serif';
+              ctx.textAlign = 'right';
+              ctx.fillText(`#${seedNum}`, x + cardW - 30, py + 28);
+              ctx.textAlign = 'left';
+            });
+          });
+        }
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '600 16px sans-serif';
+        ctx.fillText('WATA Tour • Simulador Oficial WATA Finals', 56, height - 24);
+
+        await shareOrDownloadCanvas(
+          canvas,
+          `WATA-Finals-${isGroups ? 'Grupos' : 'Octavos'}.png`,
+          'WATA Finals — Cuadro / Grupos',
+          `🎾 ${isGroups ? 'Sorteo de Grupos' : 'Llaves de Octavos'} — WATA Finals (${app.data.date} en ${app.data.venue})`
+        );
+      }
+
+      // =========================================================================
+      // 7. EVENTOS DEL DOM
+      // =========================================================================
+      function bindEvents() {
+        document.getElementById('inputDate').addEventListener('input', (e) => {
+          app.data.date = e.target.value;
+          saveState();
+        });
+        document.getElementById('inputVenue').addEventListener('input', (e) => {
+          app.data.venue = e.target.value;
+          saveState();
+        });
+        document.getElementById('inputNote').addEventListener('input', (e) => {
+          app.data.note = e.target.value;
+          saveState();
+        });
+
+        document.getElementById('formAddPlayer').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const inp = document.getElementById('inputNewPlayer');
+          addParticipant(inp.value);
+          inp.value = '';
+        });
+
+        document.querySelectorAll('.seg-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            app.viewMode = btn.getAttribute('data-view');
+            renderAll();
+          });
+        });
+
+        document.getElementById('startersContainer').addEventListener('click', (e) => {
+          const btn = e.target.closest('button[data-action]');
+          if (!btn) return;
+          const idx = parseInt(btn.getAttribute('data-idx'), 10);
+          const action = btn.getAttribute('data-action');
+          if (!Number.isFinite(idx)) return;
+
+          if (action === 'toggle-bbq' && app.data.starters[idx]) {
+            app.data.starters[idx].bbq = !app.data.starters[idx].bbq;
+            saveState();
+            renderAll();
+          } else if (action === 'withdraw') {
+            withdrawStarter(idx);
+          }
+        });
+
+        document.getElementById('waitlistContainer').addEventListener('click', (e) => {
+          const btn = e.target.closest('button[data-action]');
+          if (!btn) return;
+          const idx = parseInt(btn.getAttribute('data-idx'), 10);
+          const action = btn.getAttribute('data-action');
+          if (!Number.isFinite(idx)) return;
+
+          if (action === 'promote' && app.data.starters.length < 16) {
+            const [promoted] = app.data.waitlist.splice(idx, 1);
+            if (promoted) {
+              app.data.starters.push(promoted);
+              app.drawnGroups = null;
+              saveState();
+              renderAll();
+              showToast(`✅ ${promoted.name} subió a titulares.`);
+            }
+          } else if (action === 'remove-wait') {
+            const [removed] = app.data.waitlist.splice(idx, 1);
+            if (removed) {
+              saveState();
+              renderAll();
+              showToast(`🗑️ ${removed.name} quitado de lista de espera.`);
+            }
+          }
+        });
+
+        document.getElementById('withdrawnContainer').addEventListener('click', (e) => {
+          const btn = e.target.closest('button[data-action="reintegrate"]');
+          if (!btn) return;
+          const idx = parseInt(btn.getAttribute('data-idx'), 10);
+          if (!Number.isFinite(idx)) return;
+
+          const [person] = app.data.withdrawn.splice(idx, 1);
+          if (person) addParticipant(person.name);
+        });
+
+        // Modal Restaurar
+        const modal = document.getElementById('confirmModal');
+        document.getElementById('btnResetOriginal').addEventListener('click', () => modal.classList.add('show'));
+        document.getElementById('btnCancelReset').addEventListener('click', () => modal.classList.remove('show'));
+        document.getElementById('btnConfirmReset').addEventListener('click', () => {
+          app.data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+          app.simMode = null;
+          app.drawnGroups = null;
+          document.getElementById('simContainer').classList.add('hidden');
+          document.getElementById('btnShareSimImg').classList.add('hidden');
+          saveState();
+          renderAll();
+          modal.classList.remove('show');
+          showToast('↺ Lista original restaurada.');
+        });
+
+        // Botones WhatsApp y Simulador
+        document.getElementById('btnShareText').addEventListener('click', shareWhatsAppText);
+        document.getElementById('btnShareImage').addEventListener('click', generateOfficialFinalsPng);
+        document.getElementById('btnSimGroups').addEventListener('click', drawGroupsByPots);
+        document.getElementById('btnSimBracket').addEventListener('click', () => {
+          app.simMode = 'bracket';
+          renderSimulation();
+        });
+        document.getElementById('btnShareSimImg').addEventListener('click', generateSimulationPng);
+      }
+
+      bindEvents();
+      renderAll();
+      syncRace2026Silently();
+    })();
+  </script>
+</body>
+</html>
